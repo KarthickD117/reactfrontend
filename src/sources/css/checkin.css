@@ -1,0 +1,12 @@
+.main {
+  width: 98%;
+  height: 87%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  overflow: auto;
+  border: solid white;
+}
+.alert{
+    border-color: black;
+    margin: 1rem;
+}

@@ -1,0 +1,28 @@
+.maindiv {
+  padding-top: 3%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+.main {
+  width: 98%;
+  height: 87%;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  overflow: hidden;
+  
+}
+.center {
+  text-align: center;
+}
+.row {
+  padding-top: 3%;
+  padding-left: 1%;
+}
+.line {
+  border-top: 0.1rem solid black;
+}
+.linehandle {
+  padding-top: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+}

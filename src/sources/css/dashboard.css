@@ -1,0 +1,57 @@
+.dashboard {
+  width: 100%;
+  height: 65%;
+  background-color: #e0e0e0;
+}
+.grid-container {
+  display: grid;
+  gap: 1.875rem;
+  grid-template-columns: auto auto auto auto;
+  padding: 0.625rem;
+  width: 100%;
+}
+
+.grid-item {
+  background-color: white;
+  border: 1px solid gray;
+  height: 150px;
+  width: 100%;
+  overflow: hidden;
+}
+.grid-itemm {
+  padding: 10px;
+}
+.chart {
+  width: 300px;
+  height: 150px;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 15px;
+  color: white;
+}
+.border {
+  padding: 5px;
+}
+
+.grid-containerr {
+  width: 100%;
+  height: 87%;
+  overflow: auto;
+  background-color: #e0e0e0;
+}
+
+.bot {
+  position: fixed;
+  bottom: 1.25em;
+  right: 1.875em;
+  cursor: pointer;
+}
+.botpopup {
+  border-radius: 50%;
+  padding: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
