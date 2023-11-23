@@ -50,7 +50,7 @@ const Sidebar = () => {
       case '/checkedin': return 'Checked-in Devices';
       case '/checkout': return 'Check Out';
       case '/checkedout': return 'Checked-out Devices';
-      case '/report': return 'Report';
+      case '/reports': return 'Report';
       case '/tasks': return 'Tasks';
     }
   }

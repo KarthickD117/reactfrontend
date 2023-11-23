@@ -4,5 +4,6 @@
   margin-left: 1rem;
   margin-right: 1rem;
   overflow: auto;
+  overflow-y: auto;
   border: solid white;
 }

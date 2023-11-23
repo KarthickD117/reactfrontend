@@ -21,7 +21,7 @@ const Table = (data) => {
   const fetchData = async () => {
     await axiosEvent
       .get("devices/")
-      .then((response) => setResultArray(response.data))
+      .then((response) => setResultArray(response.data.data))
       .catch((err) => console.log(err));
   };
   

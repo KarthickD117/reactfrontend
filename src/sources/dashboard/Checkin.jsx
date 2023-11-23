@@ -37,7 +37,7 @@ export default function CheckIn() {
   return (
       <div className="main">
           <div className="alert">
-              <h6>No Device Allocated</h6>
+              <h6>{ resultArray.length === 0 ? 'No Device Allocated': 'Allocated Devices'}</h6>
           </div>
       <TableContainer component={Paper}>
         <Table

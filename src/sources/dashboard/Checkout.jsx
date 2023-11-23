@@ -45,7 +45,7 @@ export default function Checkout() {
 
   const fetchData = async () => {
     await axiosEvent.get("devices/")
-      .then((response) => setResultArray(response.data))
+      .then((response) => setResultArray(response.data.data))
       .catch((err) => console.log(err));
   };
 
@@ -87,22 +87,19 @@ export default function Checkout() {
       </div>
       <Container>
         <Row>
-          <Col>
+          <Col lg='3'>
             <Form.Select size="sm" onChange={handleChange}>
               <option>Device Type</option>
               <option value='All'>All</option>
               {setOfDeviceType.map((deviceType) => <option value={deviceType}> {deviceType} </option>)}
             </Form.Select>
           </Col>
-          <Col>
+          <Col lg='3'>
             <Form.Select size="sm" onChange={handleBrandChange}>
             <option>Device Type</option>
               <option value='All'>All</option>
               {setOfDeviceBrand.map((deviceBrand) => <option value={deviceBrand}> {deviceBrand} </option>)}
             </Form.Select>
-          </Col>
-          <Col>
-            <Button variant="outline-primary">Submit</Button>
           </Col>
         </Row>
       </Container>
@@ -148,7 +145,7 @@ export default function Checkout() {
           </TableBody>
         </Table>
       </TableContainer>
-      <Models open={open} show={show} handleClose={handleClose} events={'borrow'} updateData={updateData}/>
+      <Models open={open} show={show} handleClose={handleClose} events={'request'} updateData={updateData}/>
     </div>
   );
 }

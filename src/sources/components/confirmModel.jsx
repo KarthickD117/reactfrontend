@@ -13,7 +13,7 @@ const style = {
     bgcolor: 'background.paper',
     border: '2px solid #000',
     boxShadow: 24,
-    height: '35%',
+    height: '30%',
     p: 4,
   };
   
@@ -22,7 +22,7 @@ export const Models = ({open, show, handleClose, events, updateData}) => {
         updateData()
         handleClose()
     }
-    const URL = events === 'borrow' ? 'devicereport/borrowdevice/'
+    const URL = events === 'request' ? 'devicereport/borrowdevice/'
         : 'devicereport/returndevice/'
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -46,10 +46,10 @@ export const Models = ({open, show, handleClose, events, updateData}) => {
         >
           <Box sx={style }>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              Text in a modal
+              Action
             </Typography>
             <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-               Do you want to assign asset number {show.action}
+               Do you want to {events} asset number {show.assetNo}
             </Typography>
         <Button
           sx={{ top: 30, width: "100px" }}

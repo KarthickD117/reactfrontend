@@ -59,12 +59,12 @@ export default function UserDataTable() {
     
     <div class="devicetable">
       <div class="button" style={{ paddingLeft: 25 }}>
-        <Button variant="outline-primary" disabled={!perm} onClick={navigatee}>
+        {perm && <Button variant="outline-primary" disabled={!perm} onClick={navigatee}>
           Add User
-        </Button>
+        </Button>}
       </div>
 
-        <div style={{ height: 450, width: '100%', padding: 25, transition:'none ! important'}}>
+        <div style={{ height: '85%', width: '100%', padding: 25, transition:'none ! important'}}>
         <DataGrid
           style={{width:'93%'}}
           rows={resultArray}

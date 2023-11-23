@@ -1,5 +1,4 @@
 const detailsRows =(resultArray) => resultArray.map((row) => {
-  console.log('in row map', row)
     return {
       id: row.id,
       assetNo: row.assetNo.assetNo ,

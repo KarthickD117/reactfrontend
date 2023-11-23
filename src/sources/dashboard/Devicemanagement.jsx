@@ -23,8 +23,8 @@ const columns = [
 
 export default function DataTable() {
   const [resultArray, setResultArray] = useState([]);
-  const [selectedDeviceType, setSelectedDeviceType] = useState("");
-  const [selectedDeviceBrand, setSelectedDeviceBrand] = useState("");
+  const [selectedDeviceType, setSelectedDeviceType] = useState('');
+  const [selectedDeviceBrand, setSelectedDeviceBrand] = useState('');
   const [perm, setPerm] = useState(false)
   const handleChange = (e) => {
     setSelectedDeviceType(e.target.value)
@@ -49,7 +49,7 @@ export default function DataTable() {
   useEffect(() => { 
     fetchData();
   }, []);
-  
+
   const setOfDeviceType = Array.from(new Set(resultArray.map((data) => data.assetType)))
   const filteredRows = selectedDeviceType !== 'All'
     ? resultArray.filter((rows) => rows.assetType === selectedDeviceType)
@@ -63,22 +63,22 @@ export default function DataTable() {
   return (
     <>
     <div class="button" style={{ paddingLeft: 25 }}>
-        <Button variant="outline-primary" onClick={navigatee} disabled={!perm}>
+        {perm && <Button variant="outline-primary" onClick={navigatee} disabled={!perm}>
           Add Device
-        </Button>
+        </Button>}
       </div>
       <Container>
         <Row>
-          <Col>
+          <Col lg="3">
             <Form.Select size="sm" onChange={handleChange}>
-              <option>Device Type</option>
+              <option value=''>Device Type</option>
               <option value='All'>All</option>
               {setOfDeviceType.map((deviceType) => <option value={deviceType}> {deviceType} </option>)}
             </Form.Select>
           </Col>
-          <Col>
-            <Form.Select size="sm" onChange={handleBrandChange} >
-            <option>Device Type</option>
+          <Col lg="3">
+          <Form.Select size="sm" onChange={handleBrandChange} >
+            <option value=''>Device Brand</option>
               <option value='All'>All</option>
               {setOfDeviceBrand.map((deviceBrand) => <option value={deviceBrand}> {deviceBrand} </option>)}
             </Form.Select>

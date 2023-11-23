@@ -39,12 +39,6 @@ export default function Allocate() {
   
   return (
     <div className="main">
-      <Container>
-        <Row>
-          <Col sm={10}></Col>
-        <Col sm={2}><Button variant="secondary">Go Back</Button></Col>
-        </Row>
-      </Container>
       <div className="linehandle">
         <div class="line"></div>
       </div>
