@@ -3,13 +3,14 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import '../css/adddevice.css';
 import * as React from "react";
 import { axiosEvent } from "../utils/axiosEvent";
+import { devdb } from "../../context";
 
 export default function Formdata() {
-
+  const val = useContext(devdb)
   const [formData, setFormData] = useState({});
   const handleChange = (event) => {
     setFormData({
@@ -24,6 +25,9 @@ export default function Formdata() {
     try {
       await axiosEvent.post("devices/",formData)
         .then(response => {
+          if (response.status === 201){
+          val.assetdb = ''
+          }
           console.log('response is ', response)
           }
         );

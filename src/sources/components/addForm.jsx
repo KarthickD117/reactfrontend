@@ -1,12 +1,35 @@
-import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import { useLocation } from 'react-router-dom';
 import React from "react";
 import '../css/adduser.css'
 
-const FormData = ({ formData,handleChange}) => {
+const FormData = ({ formData,handleChange,userlist}) => {
+  const location = useLocation()
+  const initialVal = useRef('')
+  function checkform(){
+    if (location.pathname ==='/adduser'){
+      if (userlist.includes(Number(formData.ps_no))){
+        return true
+      } else {
+        return false
+      }
+    }
+    if (location.pathname === '/updateemployee'){
+      if ((initialVal.current )=== (Number(formData.ps_no)) || initialVal.current === ''){
+        return false
+      } else if (userlist.includes(Number(formData.ps_no))){
+        return true
+      } else {
+        return false
+      }
+    }
+  }
+  useEffect(() => {
+    initialVal.current = Number(formData.ps_no)
+  },[])
   return (
     <div>
      <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
@@ -14,7 +37,14 @@ const FormData = ({ formData,handleChange}) => {
               Employee ID
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type="Employee ID" placeholder="Employee ID" name="ps_no" value={formData.ps_no || ""} onChange={handleChange} />
+              <Form.Control type="Employee ID" 
+                placeholder="Employee ID"
+                isInvalid={checkform()}
+                name="ps_no" value={formData.ps_no || ""} 
+                onChange={handleChange} />
+                <Form.Control.Feedback type="invalid">
+                  User already exists
+                </Form.Control.Feedback>
             </Col>
           </Form.Group>
           <Form.Group

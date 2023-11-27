@@ -21,17 +21,16 @@ export default function StickyTable({columns, data}) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-  const [resultArray, setResultArray] = useState([]);
-  console.log('in', data)
+
   return (
     <Paper sx={{ width: '100%', overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 'auto' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableRow>
-              {columns.map((column) => (
+              {columns.map((column,index) => (
                 <TableCell
-                  key={column.id}
+                  key={index}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
@@ -46,10 +45,10 @@ export default function StickyTable({columns, data}) {
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
-                    {columns.map((column) => {
+                    {columns.map((column, index) => {
                       const value = row[column.id];
                       return (
-                        <TableCell key={column.id} align={column.align}>
+                        <TableCell key={index} align={column.align}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
                             : value}

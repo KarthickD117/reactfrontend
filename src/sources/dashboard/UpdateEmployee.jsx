@@ -11,8 +11,7 @@ import FormData from "../components/addForm";
 
 export default function UpdateEmployee() {
     const employeeData = useLocation();
-    const empData = Object.fromEntries(employeeData.state)
-    console.log('in update employee',empData)
+    const empData = Object.fromEntries(employeeData.state.entry)
   const [formData, setFormData] = useState(empData);
   const [selectedOption, setSelectedOption] = useState('')
     
@@ -21,7 +20,6 @@ export default function UpdateEmployee() {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    console.log('form in update user comp', formData)
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -44,7 +42,7 @@ export default function UpdateEmployee() {
     <div className="form">
       <fieldset>
         <Form onSubmit={handleSubmit}>
-          <FormData formData = {formData} handleChange={handleChange}/>
+          <FormData formData = {formData} handleChange={handleChange} userlist={employeeData.state.psno}/>
           <Form.Group as={Row} className="mb-3">
             <Col xs={2}>
               <Button variant="outline-primary" type="submit">

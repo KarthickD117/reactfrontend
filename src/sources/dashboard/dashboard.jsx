@@ -328,8 +328,8 @@ const Dashboard = () => {
               <div
                 style={{
                   color: "black",
-                  fontSize: "20px",
-                  fontFamily: "Times new roman",
+                  fontSize: "17px",
+                  fontFamily: "sienna",
                 }}
               >
                 Total Builds
@@ -338,15 +338,15 @@ const Dashboard = () => {
               <div
                 style={{
                   color: "black",
-                  fontSize: "20px",
-                  fontFamily: "Times new roman",
+                  fontSize: "17px",
+                  fontFamily: "sienna",
                 }}
               >
                 25
               </div>
             </div>
           </div>
-          <div className="chart">
+          <div className="chart" style={{width:'auto'}}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart width={300} height={100} data={dataa}>
                 <Line
@@ -386,8 +386,8 @@ const Dashboard = () => {
               <div
                 style={{
                   color: "black",
-                  fontSize: "20px",
-                  fontFamily: "Times new roman",
+                  fontSize: "17px",
+                  fontFamily: "sienna",
                 }}
               >
                 Completed Builds
@@ -396,15 +396,15 @@ const Dashboard = () => {
               <div
                 style={{
                   color: "black",
-                  fontSize: "20px",
-                  fontFamily: "Times new roman",
+                  fontSize: "17px",
+                  fontFamily: "sienna",
                 }}
               >
                 25
               </div>
             </div>
           </div>
-          <div className="chart">
+          <div className="chart" style={{width:'auto'}}>
             <ResponsiveContainer width="100%" height="100%">
               <LineChart width={300} height={100} data={dataa}>
                 <Line
@@ -435,7 +435,7 @@ const Dashboard = () => {
 
       <div className="grid-containerr">
         <div className="grid-itemm">
-          <div style={{ height: "100%", width: "100%", backgroundColor: "white" }}>
+          <div style={{ height: 370, width: "100%", backgroundColor: "white" }}>
             <DataGrid
               rows={rows}
               columns={columns}

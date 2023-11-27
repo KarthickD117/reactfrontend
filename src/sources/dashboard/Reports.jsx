@@ -61,7 +61,7 @@ export default function Report() {
   console.log('date picker', datePicker)
   return (
     <>
-        <Container>
+        <Container style={{marginBottom:'10px'}}>
         <Row>
           <Col lg="3">
             <Form.Select size="sm" onChange={handleChange}>

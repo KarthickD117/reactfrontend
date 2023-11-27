@@ -14,15 +14,16 @@ const style = {
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: 400,
+  height:170,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  // border: '2px solid #000',
   boxShadow: 24,
+  justifyContent:"center",
   p: 4,
 };
 
 export default function Logout({openModel, handleCloseEvent}) {
-    const [logoutMessage, setLogoutMessage] = React.useState("");
-    const [messageColor, setMessageColor] = React.useState("");
+
     const navigate = useNavigate()
     const handleSubmit = async (event) => {
       sessionStorage.clear()
@@ -42,23 +43,22 @@ export default function Logout({openModel, handleCloseEvent}) {
             <Logout />
         
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
+                <Typography id="modal-modal-title" variant="h6" component="h2" style={{fontSize:"15px"}}>
                     Do you want to logout?
                 </Typography>
-                <Button sx={{top:20}}
+                <Button sx={{top:60}}
                   variant="contained"
                   color="primary"
                   onClick={handleSubmit}
                 >
                   LOGOUT
                 </Button>
-                <div style={{ color: messageColor }}>{logoutMessage}</div>
-            </Box>
-            <Button sx={{top:35,left:'225px', width:'100px'}}
+                <Button sx={{top:60,left:'20px', width:'100px'}}
             variant="contained"
             onClick={handleCloseEvent}
         >
             CLOSE</Button>
+            </Box>  
         </Box>
         </Modal> 
         </div>
