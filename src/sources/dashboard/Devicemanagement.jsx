@@ -102,10 +102,12 @@ export default function DataTable() {
             </Form.Select>
           </Col>
           <Col lg="3">
-          <Form.Select size="sm" onChange={handleBrandChange} >
+           <Form.Select key={selectedDeviceType} size="sm" onChange={handleBrandChange} >
             <option value=''>Device Brand</option>
               <option value='All'>All</option>
-              {setOfDeviceBrand.map((deviceBrand, index) => <option key={index} value={deviceBrand}> {deviceBrand} </option>)}
+              {setOfDeviceBrand.map((deviceBrand, index) => 
+                <option key={index} value={deviceBrand}> {deviceBrand} </option>)
+              }
             </Form.Select>
           </Col>
         </Row>
