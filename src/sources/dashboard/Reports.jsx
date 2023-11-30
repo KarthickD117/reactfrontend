@@ -48,11 +48,11 @@ export default function Report() {
     setdatePicker(e.target.value)
   }
   const handleChangeDate = (e) => {
-    if (datePicker == 'month') {
+    if (datePicker === 'month') {
     const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1)))
     fetchData(val)
     }
-    if (datePicker == 'date') {
+    if (datePicker === 'date') {
       console.log(e)
       const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1))+'-'+e.$D)
       fetchData(val)

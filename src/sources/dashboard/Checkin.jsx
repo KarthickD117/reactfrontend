@@ -33,7 +33,6 @@ export default function CheckIn() {
   useEffect(() => {
     fetchData();
   }, []);
-  console.log('the arr is ',resultArray )
   return (
       <div className="main">
           <div className="alert">

@@ -20,7 +20,7 @@ import "../css/dashboard.css";
 import { PieChart, pieArcClasses } from "@mui/x-charts/PieChart";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import { responsiveFontSizes, styled } from "@mui/material/styles";
-
+import App1 from "../../App1";
 //table
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -50,78 +50,18 @@ import { PureComponent } from "react";
 import { AreaChart, Area } from "recharts";
 
 const dataaa = [
-  {
-    name: "Jan",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Feb",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Mar",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Apr",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "May",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "June",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "July",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Aug",
-    uv: 2340,
-    pv: 1290,
-    amt: 2100,
-  },
-  {
-    name: "Sep",
-    uv: 3300,
-    pv: 1300,
-    amt: 2100,
-  },
-  {
-    name: "Oct",
-    uv: 1200,
-    pv: 2400,
-    amt: 2100,
-  },
-  {
-    name: "Nov",
-    uv: 3000,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Dec",
-    uv: 1000,
-    pv: 1300,
-    amt: 1100,
-  },
+  {name: "Jan",uv: 4000,pv: 2400,amt: 2400,},
+  {name: "Feb",uv: 3000,pv: 1398,amt: 2210,},
+  {name: "Mar",uv: 2000,pv: 9800,amt: 2290,},
+  {name: "Apr",uv: 2780,pv: 3908,amt: 2000,},
+  {name: "May",uv: 1890,pv: 4800,amt: 2181,},
+  {name: "June",uv: 2390,pv: 3800,amt: 2500,},
+  {name: "July",uv: 3490,pv: 4300,amt: 2100,},
+  {name: "Aug",uv: 2340,pv: 1290,amt: 2100,},
+  {name: "Sep",uv: 3300,pv: 1300,amt: 2100,},
+  {name: "Oct",uv: 1200,pv: 2400,amt: 2100,},
+  {name: "Nov",uv: 3000,pv: 4300,amt: 2100,},
+  {name: "Dec",uv: 1000,pv: 1300,amt: 1100,},
 ];
 function checkColor(val){
   if(val === 100 ) {
@@ -178,129 +118,25 @@ const columns = [
 ];
 
 const rows = [
-  {
-    id: 1,
-    project: 1,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 50,
-    date: "06 Sep 2021",
-  },
-  {
-    id: 2,
-    project: 2,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 20,
-    date: "02 Dec 2020",
-  },
-  {
-    id: 3,
-    project: 3,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 60,
-    date: "08 Nov 2019",
-  },
-  {
-    id: 4,
-    project: 4,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 30,
-    date: "20 Oct 2021",
-  },
-  {
-    id: 5,
-    project: 5,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 100,
-    date: "01 Feb 2022",
-  },
-  {
-    id: 6,
-    project: 6,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 100,
-    date: "09 Mar 2021",
-  },
-  {
-    id: 7,
-    project: 7,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 60,
-    date: "08 Feb 2020",
-  },
-  {
-    id: 8,
-    project: 8,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 10,
-    date: "10 Mar 2020",
-  },
-  {
-    id: 9,
-    project: 9,
-    lead: "TEST",
-    assignee: "TEST USER",
-    progress: 90,
-    date: "22 Apr 2022",
-  },
+  {id: 1,project: 1,lead: "TEST",assignee: "TEST USER",progress: 50,date: "06 Sep 2021",},
+  {id: 2,project: 2,lead: "TEST",assignee: "TEST USER",progress: 20,date: "02 Dec 2020",},
+  {id: 3,project: 3,lead: "TEST",assignee: "TEST USER",progress: 60,date: "08 Nov 2019",},
+  {id: 4,project: 4,lead: "TEST",assignee: "TEST USER",progress: 30,date: "20 Oct 2021",},
+  {id: 5,project: 5,lead: "TEST",assignee: "TEST USER",progress: 100,date: "01 Feb 2022",},
+  {id: 6,project: 6,lead: "TEST",assignee: "TEST USER",progress: 100,date: "09 Mar 2021",},
+  {id: 7,project: 7,lead: "TEST",assignee: "TEST USER",progress: 60,date: "08 Feb 2020",},
+  {id: 8,project: 8,lead: "TEST",assignee: "TEST USER",progress: 10,date: "10 Mar 2020",},
+  {id: 9,project: 9,lead: "TEST",assignee: "TEST USER",progress: 90,date: "22 Apr 2022",},
 ];
-
 const dataa = [
-  {
-    name: "Page A",
-    uv: 4000,
-    pv: 2400,
-    amt: 2400,
-  },
-  {
-    name: "Page B",
-    uv: 3000,
-    pv: 1398,
-    amt: 2210,
-  },
-  {
-    name: "Page C",
-    uv: 2000,
-    pv: 9800,
-    amt: 2290,
-  },
-  {
-    name: "Page D",
-    uv: 2780,
-    pv: 3908,
-    amt: 2000,
-  },
-  {
-    name: "Page E",
-    uv: 1890,
-    pv: 4800,
-    amt: 2181,
-  },
-  {
-    name: "Page F",
-    uv: 2390,
-    pv: 3800,
-    amt: 2500,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
-  {
-    name: "Page G",
-    uv: 3490,
-    pv: 4300,
-    amt: 2100,
-  },
+  {name: "Page A",uv: 4000,pv: 2400,amt: 2400,},
+  {name: "Page B",uv: 3000,pv: 1398,amt: 2210,},
+  {name: "Page C",uv: 2000,pv: 9800,amt: 2290,},
+  {name: "Page D",uv: 2780,pv: 3908,amt: 2000,},
+  {name: "Page E",uv: 1890,pv: 4800,amt: 2181,},
+  {name: "Page F",uv: 2390,pv: 3800,amt: 2500,},
+  {name: "Page G",uv: 3490,pv: 4300,amt: 2100,},
+  {name: "Page G",uv: 3490,pv: 4300,amt: 2100,},
 ];
 
 const data = [
@@ -318,121 +154,7 @@ const Dashboard = () => {
   
   return (
     <div className="dashboard">
-      <div className="grid-container">
-        <div className="grid-item">
-          <div className="boxinfo">
-            <div
-              className="title"
-              style={{ display: "inline-flex", paddingLeft: "10px" }}
-            >
-              <div
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontFamily: "sienna",
-                }}
-              >
-                Total Builds
-              </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <div
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontFamily: "sienna",
-                }}
-              >
-                25
-              </div>
-            </div>
-          </div>
-          <div className="chart" style={{width:'auto'}}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart width={300} height={100} data={dataa}>
-                <Line
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#8884d8"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div className="grid-item">
-          <PieChart
-            series={[
-              {
-                data,
-                highlightScope: { faded: "global", highlighted: "item" },
-                faded: { innerRadius: 30, additionalRadius: -30 },
-              },
-            ]}
-            sx={{
-              [`& .${pieArcClasses.faded}`]: {
-                fill: "Black",
-              },
-            }}
-            height={150}
-            width={200}
-          />
-        </div>
-        <div class="grid-item">
-          <div className="boxinfo">
-            <div
-              className="title"
-              style={{ display: "inline-flex", paddingLeft: "10px" }}
-            >
-              <div
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontFamily: "sienna",
-                }}
-              >
-                Completed Builds
-              </div>
-              &nbsp;&nbsp;&nbsp;&nbsp;
-              <div
-                style={{
-                  color: "black",
-                  fontSize: "17px",
-                  fontFamily: "sienna",
-                }}
-              >
-                25
-              </div>
-            </div>
-          </div>
-          <div className="chart" style={{width:'auto'}}>
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart width={300} height={100} data={dataa}>
-                <Line
-                  type="monotone"
-                  dataKey="pv"
-                  stroke="#8884d8"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
-        <div className="grid-item">
-          <BarChart
-            xAxis={[
-              { scaleType: "band", data: ["group A", "group B", "group C"] },
-            ]}
-            series={[
-              { data: [4, 3, 5] },
-              { data: [1, 6, 3] },
-              { data: [2, 5, 6] },
-            ]}
-            width={250}
-            height={160}
-          />
-        </div>
-      </div>
-
+      <App1 />
       <div className="grid-containerr">
         <div className="grid-itemm">
           <div style={{ height: 370, width: "100%", backgroundColor: "white" }}>
@@ -454,7 +176,7 @@ const Dashboard = () => {
         <div className="grid-container1">
           <div className="grid-item1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar style={{ width: "50%" }} />
+              <DateCalendar style={{ width: "100%" ,height:"100%"}} />
             </LocalizationProvider>
           </div>
         </div>

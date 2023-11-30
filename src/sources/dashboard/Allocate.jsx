@@ -5,22 +5,22 @@ import Form from "react-bootstrap/Form";
 import "../css/allocate.css";
 import "../css/checkout.css";
 import { useNavigate } from "react-router-dom";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
 import { empdb } from "../../context";
 
-export default function Allocate() {
+export default function Allocate(colors) {
   const val = useContext(empdb)
   const navigate = useNavigate();
   const [message, setMessage]= useState('')
+  const [resultArray, setResultArray] = useState([]);
+  const [selectedUser, setSelectedUser] = useState({ps_no:'', Firstname:''});
+
   const checkout = () => {
-    console.log(selectedUser.ps_no)
     if (selectedUser.ps_no !== '') { navigate("/checkout", {state:Object.entries(selectedUser)})}
     else {
       setMessage('*Please select a valid option')
     }
   }
+
   const handleChange = (e) => {
     setMessage('')
     const selectedPsNo = Number(e.target.value)
@@ -28,8 +28,6 @@ export default function Allocate() {
     setSelectedUser({ps_no : selectedPsNo, Firstname:selectedName});
   };
 
-  const [resultArray, setResultArray] = useState([]);
-  const [selectedUser, setSelectedUser] = useState({ps_no:'', Firstname:''});
   const fetchData = async () => {
     await axiosEvent.get("employees/")
       .then((response) => {
@@ -38,6 +36,7 @@ export default function Allocate() {
       })
       .catch((err) => console.log(err));
   };
+
   useEffect(() => {
     if (val.userdb==='') { 
       fetchData();

@@ -11,10 +11,11 @@ import Ipad from "./Ipad";
 import VR from "./VR";
 import Sdbrands from "./Sdbrands";
 import Table from "./Table";
+import { getSessionStorage } from "../utils/sessionStorage";
 
 const config = {
   initialMessages: [
-    createChatBotMessage(`Hi, How can I help you!`, {
+    createChatBotMessage(`Hi ${getSessionStorage('firstname')}, How can I help you!`, {
       widget: "options",
     }),
   ],

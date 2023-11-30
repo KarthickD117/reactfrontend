@@ -12,14 +12,12 @@ import FormControl from '@mui/material/FormControl';
 import {setcookie} from "../utils/cookieSet";
 import { useNavigate } from "react-router-dom";
 import { axiosEvent } from "../utils/axiosEvent";
-import { devdb } from "../../context";
 import { getSessionStorage, setSessionStorage } from "../utils/sessionStorage";
 
 export default function Login() {
-  const val = React.useContext(devdb)
-  console.log(val.assetdb)
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = React.useState(false);
+  const [errMsg, setErrMsg] = useState('')
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -40,7 +38,7 @@ export default function Login() {
         window.location.reload()
       });
     } catch (error) {
-      console.log(error);
+      setErrMsg('Invalid Username or Password')
     }
   };
 
@@ -88,10 +86,11 @@ export default function Login() {
                     label="Password"
                   />
               </FormControl>
-
+                    
             <div className="d-grid gap-2 mt-3">
+             <div style={{marginLeft:60, marginTop:15, color:'red',fontSize:'12px'}}>{errMsg}</div>
             <Button
-              sx={{ top:"40px", width: "100px" ,left:90}}
+              sx={{ top:"30px", width: "100px" ,left:90}}
               type="submit"
               variant="contained"
               color="primary"

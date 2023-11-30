@@ -17,9 +17,9 @@ export default function Formdata() {
       ...formData,
       [event.target.name]: event.target.value,
     });
-    console.log(formData)
-  };
-
+  }
+  const assetNoList = val.assetdb.map(row => row.assetNo)
+  console.log(assetNoList.includes(Number(formData.assetNo)))
   const handleSubmit = async (event) => { 
     event.preventDefault();
     try {
@@ -50,7 +50,10 @@ export default function Formdata() {
               Asset No
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type=" AssetNo" placeholder=" Asset No"  name="assetNo" onChange={handleChange}/>
+              <Form.Control isInvalid={assetNoList.includes(Number(formData.assetNo))} type=" AssetNo" placeholder=" Asset No"  name="assetNo" onChange={handleChange}/>
+              <Form.Control.Feedback type="invalid">
+                  Asset already exists
+            </Form.Control.Feedback>
             </Col>
           </Form.Group>
 

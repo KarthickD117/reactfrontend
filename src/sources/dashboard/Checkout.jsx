@@ -18,13 +18,14 @@ import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
 import {Models} from "../components/confirmModel";
 import { useTheme } from "@mui/material/styles";
-import { ColorModeContext,tokens } from "../../theme";
+import { tokens } from "../../theme";
+import { devdb } from "../../context";
 
 export default function Checkout() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const colorMode = useContext(ColorModeContext);
-  const [open, setOpen] = React.useState(false);
+  const val = useContext(devdb)
+  const [open, setOpen] = useState(false);
   const handleOpen = (e) => {setOpen(true);
     setShow({ps_no:empData.ps_no, assetNo:e})
   }
@@ -45,12 +46,20 @@ export default function Checkout() {
 
   const fetchData = async () => {
     await axiosEvent.get("devices/")
-      .then((response) => setResultArray(response.data.data))
+      .then((response) => {
+        setResultArray(response.data.data)
+        val.assetdb = (response.data.data);
+        val.hasPerm = response.data.perm
+      })
       .catch((err) => console.log(err));
   };
 
   useEffect(() => {
-    fetchData()
+    if (val.assetdb===''){ 
+      fetchData();
+      } else {
+        setResultArray(val.assetdb)
+      }
   }, []);
 
   const setOfDeviceType = Array.from(new Set(resultArray.map((data) => data.assetType)))
@@ -68,7 +77,7 @@ export default function Checkout() {
     navigate("/allocate");
   };
   return (
-    <div className="mainn">
+    <div className="mainn" style={{ backgroundColor:colors.grey[900]}}>
       <Container>
         <Row className="row">
           <Col sm={10}>
@@ -95,7 +104,7 @@ export default function Checkout() {
             </Form.Select>
           </Col>
           <Col lg='3'>
-            <Form.Select size="sm" onChange={handleBrandChange}>
+            <Form.Select size="sm" key={selectedDeviceType} onChange={handleBrandChange}>
             <option>Device Type</option>
               <option value='All'>All</option>
               {setOfDeviceBrand.map((deviceBrand) => <option value={deviceBrand}> {deviceBrand} </option>)}
@@ -106,9 +115,9 @@ export default function Checkout() {
       <br />
       <TableContainer component={Paper}>
         <Table
-          sx={{ minWidth: 650, bgcolor: 'background.paper'}}
+          sx={{ minWidth: '90%', bgcolor: 'background.paper'}}
           aria-label="simple table"
-          style={{ backgroundColor:colors.grey[900]}}
+          
         >
           <TableHead>
             <TableRow >

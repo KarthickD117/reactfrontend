@@ -1,14 +1,17 @@
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useContext, useRef } from "react";
 import { useLocation } from 'react-router-dom';
 import React from "react";
 import '../css/adduser.css'
+import { empdb } from "../../context";
 
-const FormData = ({ formData,handleChange,userlist}) => {
+const FormData = ({ formData,handleChange}) => {
   const location = useLocation()
   const initialVal = useRef('')
+  const val = useContext(empdb)
+  const userlist = val.userdb.map(row => row.ps_no)
   function checkform(){
     if (location.pathname ==='/adduser'){
       if (userlist.includes(Number(formData.ps_no))){
