@@ -17,10 +17,13 @@ import Checkout from "./sources/dashboard/Checkout";
 import CheckIn from "./sources/dashboard/Checkin";
 import CheckedIn from "./sources/dashboard/Checkedin";
 import CheckedOut from "./sources/dashboard/Checkedout";
-import Login from "./sources/global/login";
+import Roaster from "./sources/dashboard/Roasterplan";
+import Login from "./sources/global/log";
 import PrivateRoutes from "./sources/utils/privateRoute";
 import PublicRoutes from "./sources/utils/publicRoute";
+import RequestDevice from "./sources/dashboard/requestDevice";
 import { setSessionStorage, getSessionStorage} from "./sources/utils/sessionStorage";
+import PageConstruct from "./sources/components/constructionImage";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -39,7 +42,7 @@ function App() {
             <div className="app">
             <Routes>
               <Route element={<PrivateRoutes />}>
-              <Route path="*" />
+              <Route path="*" element={<PageConstruct />}/>
               <Route path="/" element={<Dashboard />} />
               <Route path="/devicemanagement" element={<DataTable />} />
               <Route path="/deviceprocurement" element={<Contacts />} />
@@ -49,7 +52,8 @@ function App() {
               <Route path="/viewemployee" element={<ViewEmployee />} />
               <Route path="/updateemployee" element={<UpdateEmployee />} />  
               <Route path="/reports" element={<Report />} />
-              <Route path="/allocate" element={<Allocate />} />
+              <Route path="/roasterplan" element={<Roaster />} />
+              <Route path="/allocate" element={<RequestDevice />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/checkin" element={<CheckIn />} />
               <Route path="/checkedin" element={<CheckedIn />} />

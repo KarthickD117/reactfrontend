@@ -9,11 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { Box, IconButton } from "@mui/material";
 import { axiosEvent } from "../utils/axiosEvent";
 import { empdb } from "../../context";
+import { useSearchCtx } from "../utils/customcontext";
 
 
 export default function UserDataTable() {
   
   const val = useContext(empdb)
+  const [filterData, setfilterData] = useSearchCtx()
   const columns = [
     { field: "Firstname", headerName: "Name", width: 200 },
     { field: "ps_no", headerName: "Employee ID", width: 200 },
@@ -64,20 +66,43 @@ export default function UserDataTable() {
       setPerm(val.hasPerm)
     }
   },[]);
-  console.log(perm)
+  function filters (){
+    if (filterData === ''){
+      return resultArray
+    }
+    else {
+      const fd = resultArray.filter(rows => 
+        rows.Firstname.toLowerCase().includes(filterData.toLowerCase()) ||
+        rows.Lastname.toLowerCase().includes(filterData.toLowerCase()) ||
+        String(rows.ps_no).includes(filterData.toLowerCase()) ||
+        String(rows.Contact).includes(filterData.toLowerCase()) ||
+        rows.LTIM_MailID.toLowerCase().includes(filterData.toLowerCase()))
+      return fd
+    }
+  }
   return (
-    
+  
     <div className="user-table" style={{height: '87%', overflow:"auto"}}>
       <div className="button" style={{ paddingLeft: 25 }}>
-        {perm && <Button variant="outline-primary" disabled={!perm} onClick={navigatee}>
+        {perm && <Button variant="primary" disabled={!perm} onClick={navigatee}>
           Add User
         </Button>}
       </div>
-
         <div style={{  width: '100%', padding: 25, transition:'none ! important'}}>
         <DataGrid
+        sx={{
+          ".MuiTablePagination-displayedRows":{
+          "margin-top":"1em",
+          "margin-bottom":"1em"
+          },
+          ".MuiTablePagination-selectLabel":{
+            "margin-top":"1em",
+            "margin-bottom":"1em"
+          }
+        }}
+          
           style={{maxHeight:'100%'}}
-          rows={resultArray}
+          rows={filters()}
           columns={columns}
           localeText={{noRowsLabel: 'User is not authenticated'}}
           getRowId={(rows) => rows.ps_no}

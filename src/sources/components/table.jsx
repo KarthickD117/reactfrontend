@@ -62,6 +62,16 @@ export default function StickyTable({columns, data}) {
         </Table>
       </TableContainer>
       <TablePagination
+      sx={{
+        ".MuiTablePagination-displayedRows":{
+        "margin-top":"1em",
+        "margin-bottom":"1em"
+        },
+        ".MuiTablePagination-selectLabel":{
+          "margin-top":"1em",
+          "margin-bottom":"1em"
+        }
+      }}
         rowsPerPageOptions={[10, 20]}
         component="div"
         count={data.length}

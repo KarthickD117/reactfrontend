@@ -8,7 +8,8 @@
   align-items: center;
   width: 100vw;
   height: 100vh;
-  background-color: #1F2A40;
+  background: rgb(37,126,164);
+background: linear-gradient(170deg, rgba(37,126,164,1) 49%, rgba(157,128,176,1) 59%, rgba(141,97,154,1) 70%, rgba(16,119,212,1) 84%);
 }
 
 .Auth-form {

@@ -19,11 +19,6 @@ const columns = [
   { id: "assetType", label: "Asset Type", width: 85 },
   { id: "assetBrand", label: "Asset Brand", width: 85 },
   { id: "assetModel", label: "Asset Model", width: 85 },
-  {
-    id: "assetSerialNumber",
-    label: "Asset Serial No",
-    width: 85,
-  },
   { id: "Firstname", label: "Borrower Name", width: 85 },
   { id: "dateBorrowed", label: "Date Borrowed", width: 100 },
   { id: "dateReturned", label: "Return Date", width: 100 },
@@ -34,10 +29,8 @@ export default function Report() {
 
   const [resultArray, setResultArray] = useState([]);
   const [datePicker, setdatePicker] = useState('date')
-  const [selected, setSelected] = useState('true')
-  const [month, setMonth] = useState()
+
   const fetchData = async (year) => {
-    console.log(typeof year)
     await axiosEvent.get(`devicedate/${year}`)
       .then((response) => setResultArray(response.data))
       .catch((err) => console.log(err));
@@ -53,18 +46,16 @@ export default function Report() {
     fetchData(val)
     }
     if (datePicker === 'date') {
-      console.log(e)
       const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1))+'-'+e.$D)
       fetchData(val)
     }
   }
-  console.log('date picker', datePicker)
   return (
     <>
         <Container style={{marginBottom:'10px'}}>
         <Row>
           <Col lg="3">
-            <Form.Select size="sm" onChange={handleChange}>
+            <Form.Select size="sm" onChange={handleChange} style={{height:'100%'}}>
               <option value = 'date'> DATE </option>
               <option value='month'> MONTH </option>
             </Form.Select>
@@ -75,7 +66,7 @@ export default function Report() {
               <DatePicker
                 onAccept={handleChangeDate}
                 label={'MM'}
-                views={["month" ]}
+                views={["month",'year' ]}
               />
             </LocalizationProvider>} 
             {datePicker=='date' && <LocalizationProvider dateAdapter={AdapterDayjs}>

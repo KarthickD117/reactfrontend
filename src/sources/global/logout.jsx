@@ -7,6 +7,11 @@ import { setSessionStorage } from '../utils/sessionStorage';
 import { removecookie } from '../utils/cookieSet';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const style = {
   position: 'absolute',
@@ -33,34 +38,35 @@ export default function Logout({openModel, handleCloseEvent}) {
 
     return (
         <div>
-        <Modal
+          <Dialog
+          sx={{
+            "& .MuiDialog-container": {
+              "& .MuiPaper-root": {
+                width: "100%",
+                maxWidth: "300px",
+              },
+            },
+          }}
         open={openModel}
         onClose={handleCloseEvent}
-        aria-labelledby="parent-modal-title"
-        aria-describedby="parent-modal-description"
-        >
-        <Box sx={{ ...style }}>
-            <Logout />
-        
-            <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2" style={{fontSize:"15px"}}>
-                    Do you want to logout?
-                </Typography>
-                <Button sx={{top:60}}
-                  variant="contained"
-                  color="primary"
-                  onClick={handleSubmit}
-                >
-                  LOGOUT
-                </Button>
-                <Button sx={{top:60,left:'20px', width:'100px'}}
-            variant="contained"
-            onClick={handleCloseEvent}
-        >
-            CLOSE</Button>
-            </Box>  
-        </Box>
-        </Modal> 
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"LOGOUT"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to logout ?       
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleSubmit}>Logout</Button>
+          <Button onClick={handleCloseEvent} autoFocus>
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
         </div>
     );
 }

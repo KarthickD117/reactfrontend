@@ -9,9 +9,6 @@ import { styled } from "@mui/material/styles";
 import { CenterFocusStrong } from "@mui/icons-material";
 
 
-
-
-
 const Gc = () => {
   const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
@@ -48,9 +45,11 @@ const Gc2 = () => {
         { project: 3, value: 20, label: "series D" },
         { project: 4, value: 20, label: "series E" },
       ];
+      //const clrpalette = ['orange', 'red', 'green','blue','lavender','cyan']
     return (
         <div className={'insidegc2'} style={{ height:'300px'}}>
             <PieChart
+            //colors={clrpalette}
             margin={{ top: 50, bottom: 50, left: 50, right:50 }}
             series={[
               { data,
@@ -122,7 +121,7 @@ const Gc4 = () => {
     return (
         <div className={'insidegc2'} style={{ height:'300px'}}>
        <BarChart
-            
+            sx={{marginLeft:'30px'}}
             xAxis={[
               { scaleType: "band", data: ["group A", "group B", "group C"] },
             ]}
@@ -130,6 +129,7 @@ const Gc4 = () => {
               { data: [4, 3, 5] },
               { data: [1, 6, 3] },
               { data: [2, 5, 6] },
+              { data: [3, 5, 6] },
             ]}
             width={400}
             height={300}
@@ -147,10 +147,10 @@ function App1() {
       <div style={{flex:0.6}}></div>
       <div style={{flex:1}}>
     <Carousel>
-        <Gc/>
-        <Gc2/>
-        <Gc3/>
-        <Gc4/>
+        <Gc />
+        <Gc2 />
+        <Gc3 />
+        <Gc4 />
     </Carousel>
     </div>
     <div style={{flex:0.8}}></div>

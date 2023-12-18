@@ -33,6 +33,7 @@ export default function Allocate(colors) {
       .then((response) => {
         setResultArray(response.data.data)
         val.userdb = response.data.data
+        val.hasPerm = response.data.perm
       })
       .catch((err) => console.log(err));
   };

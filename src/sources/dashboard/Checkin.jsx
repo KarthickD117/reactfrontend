@@ -8,26 +8,39 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import "../css/checkin.css";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from '@mui/material/Button';
 import { axiosEvent } from "../utils/axiosEvent";
+import { devdb } from "../../context";
 import {Models} from "../components/confirmModel";
 import CloseOutlinedIcon from '@mui/icons-material/CloseOutlined';
 
 export default function CheckIn() {
-
+  const val = useContext(devdb)
   const [open, setOpen] = React.useState(false);
   const handleOpen = (psNo, assetNO) => {
     setOpen(true)
     setShow({ps_no:psNo,assetNo:assetNO})
   }
   const handleClose = () => setOpen(false);
-  const updateData = () => fetchData()
+  const updateData = () => {
+    fetchData()
+    setDevicedata()
+  }
   const [show, setShow] = useState({ps_no:'',assetNo:''}) // setassetnumber
   const [resultArray, setResultArray] = useState([]);
   const fetchData = async () => {
     await axiosEvent.get("devicereport/checkin/")
       .then((response) => setResultArray(response.data))
+      .catch((err) => console.log(err));
+  }
+
+  const setDevicedata = () => {
+    axiosEvent.get("devices/")
+      .then((response) => {
+        val.assetdb = (response.data.data);
+        val.hasPerm = response.data.perm
+      })
       .catch((err) => console.log(err));
   }
   useEffect(() => {

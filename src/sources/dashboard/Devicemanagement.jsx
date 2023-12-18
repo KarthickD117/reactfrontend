@@ -9,6 +9,7 @@ import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { devdb } from '../../context';
+import { useSearchCtx } from '../utils/customcontext';
 const columns = [
   { id: 'assetNo', label: "Device ID", minWidth: 50 },
   { id: 'assetType', label: "Device Type", minWidth: 50 },
@@ -27,8 +28,10 @@ export default function DataTable() {
   const [selectedDeviceType, setSelectedDeviceType] = useState('');
   const [selectedDeviceBrand, setSelectedDeviceBrand] = useState('');
   const [perm, setPerm] = useState(val.hasPerm)
+  const [searchData, setSearchData] = useSearchCtx()
   const handleChange = (e) => {
     setSelectedDeviceType(e.target.value)
+    setSelectedDeviceBrand("")
   };
   const handleBrandChange = (e) => {
     setSelectedDeviceBrand(e.target.value)
@@ -58,37 +61,50 @@ export default function DataTable() {
   }, []);
 
   function firstfilter(){
-    if (selectedDeviceType === 'All'){
+    if (selectedDeviceType === ''){
       return resultArray;
     }
-    if (selectedDeviceType !== '' && selectedDeviceType !=='All' ){
+    if (selectedDeviceType !== ''){
       return resultArray.filter((rows) => rows.assetType === selectedDeviceType)
     }
-    if (selectedDeviceType === ''){
-      return []
-    }
+    
   }
   function secondfilter(){
-    if (selectedDeviceBrand === 'All'){
+    if (selectedDeviceBrand === ''){
       return filteredRows;
     }
-    if (selectedDeviceBrand !== '' && selectedDeviceBrand !=='All' ){
+    if (selectedDeviceBrand !== '' ){
       return filteredRows.filter((rows) => rows.assetBrand === selectedDeviceBrand)
     }
-    if (selectedDeviceBrand === ''){
-      return []
-    }
   }
+
   const setOfDeviceType = Array.from(new Set(resultArray.map((data) => data.assetType)))
-  const filteredRows = firstfilter()
+  const filteredRows = selectedDeviceType === '' ? resultArray : resultArray.filter((rows) => rows.assetType === selectedDeviceType)
 
   const setOfDeviceBrand = Array.from(new Set(filteredRows.map((data) => data.assetBrand)))
-  const secondFilter = secondfilter()
+  const secondFilter = Array.from(selectedDeviceBrand === '' ? filteredRows : filteredRows.filter((rows) => rows.assetBrand === selectedDeviceBrand))
 
+  function filters() {
+    if(searchData === ''){
+      return secondFilter
+    }
+    else{
+      const fd = secondFilter.filter(rows => 
+        rows.assetType.toLowerCase().includes(searchData.toLowerCase()) ||
+        rows.assetBrand.toLowerCase().includes(searchData.toLowerCase()) ||
+        String(rows.assetNo).includes(searchData) ||
+        (rows.assetOsVersion !==null ? rows.assetOsVersion.toLowerCase().includes(searchData.toLowerCase()) : '') ||
+        rows.assetAvailability.toLowerCase().includes(searchData.toLowerCase()) ||
+        (rows.assetSerialNumber !== null ? rows.assetSerialNumber.toLowerCase().includes(searchData.toLowerCase()) : '') ||
+        (rows.assetModel !== null ? rows.assetModel.toLowerCase().includes(searchData.toLowerCase()) : ''))
+      return fd
+    }
+  }
+  console.log(filters())
   return (
     <div className='devicetable'  style={{height: '87%', overflow:"auto"}}>
     <div className="button" style={{ paddingLeft: 25 }}>
-        {perm && <Button variant="outline-primary" onClick={navigatee} disabled={!perm}>
+        {perm && <Button variant="primary" onClick={navigatee} disabled={!perm}>
           Add Device
         </Button>}
       </div>
@@ -97,14 +113,14 @@ export default function DataTable() {
           <Col lg="3">
             <Form.Select size="sm" onChange={handleChange}>
               <option value=''>Device Type</option>
-              <option value='All'>All</option>
+              
               {setOfDeviceType.map((deviceType, index) => <option key={index} value={deviceType}> {deviceType} </option>)}
             </Form.Select>
           </Col>
           <Col lg="3">
            <Form.Select key={selectedDeviceType} size="sm" onChange={handleBrandChange} >
             <option value=''>Device Brand</option>
-              <option value='All'>All</option>
+              
               {setOfDeviceBrand.map((deviceBrand, index) => 
                 <option key={index} value={deviceBrand}> {deviceBrand} </option>)
               }
@@ -113,7 +129,7 @@ export default function DataTable() {
         </Row>
       </Container>
       <div className="table" style={{padding:25}}>
-    <StickyTable columns={columns} data={secondFilter}/>
+    <StickyTable columns={columns} data={filters()}/>
     </div>
     </div>
   );

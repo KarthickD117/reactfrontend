@@ -1,5 +1,5 @@
-import "../css/login.css";
-import React, { useState } from "react";
+import "../css/log.css";
+import React, { useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
@@ -14,8 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { axiosEvent } from "../utils/axiosEvent";
 import { getSessionStorage, setSessionStorage } from "../utils/sessionStorage";
 import { CircularProgress } from "@mui/material";
+import { perm } from "../../context";
 
 export default function Login() {
+  const val = useContext(perm)
   const [formData, setFormData] = useState({});
   const [showPassword, setShowPassword] = React.useState(false);
   const [errMsg, setErrMsg] = useState('')
@@ -38,15 +40,18 @@ export default function Login() {
         setSessionStorage('token', response.data.access)
         setSessionStorage('username', response.data.username)
         setSessionStorage('firstname',response.data.firstname)
+        setSessionStorage('isAdmin', response.data.isAdmin)
+        val.isSuperuser = response.data.isSuperUser
+        val.isAdmin= response.data.isAdmin
         navigate("/");
         window.location.reload()
+        
       });
     } catch (error) {
       setLoading(false)
       setErrMsg('Invalid Username or Password')
     }
   };
-
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -54,22 +59,26 @@ export default function Login() {
     });
   };
 
+
   return (
-    <div className="login">
-      <div className="Auth-form-container">
-        <form className="Auth-form" onSubmit={handleProp}>
-          <div className="Auth-form-content" >
-            <h3 className="Auth-form-title">Sign In</h3 >
+    <div className="main-containter">
+      <form className="Auth-form" onSubmit={handleProp}>
+        <div className="form-container">
+           <div className="sign-in">
+            <span className="name">LOGIN</span>
+           </div>
+           <div className="user-name">
               <TextField
-                sx={{ top: "15px", width: "25ch", gridRow: "1" ,left:60}}
+                sx={{ width: "100%"}}
                 id="outlined-multiline-flexible"
                 label="USERNAME"
                 maxRows={4}
                 name="username"
                 onChange={handleChange}
               />
-
-              <FormControl sx={{ top : '25px' ,width: '25ch',gridRow: '2', left:60}} variant="outlined">
+           </div>
+           <div className="pwd">
+           <FormControl sx={{ width: '100%'}} variant="outlined">
                 <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
@@ -84,32 +93,29 @@ export default function Login() {
                         onMouseDown={handleMouseDownPassword}
                         edge="end"
                       >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                        {showPassword ?  <Visibility />: <VisibilityOff />}
                       </IconButton>
                     </InputAdornment>
                     }
                     label="Password"
                   />
               </FormControl>
-                    
-            <div className="d-grid gap-2 mt-3">
-             <div style={{marginLeft:60, marginTop:15, color:'red',fontSize:'12px'}}>{errMsg}</div>
-            <Button disabled={loading}
-              sx={{ top:"30px", width: "100px" ,left:90}}
+           </div>
+           <div className="btn">
+           <Button disabled={loading}
+              sx={{ width: "100px" }}
               type="submit"
               variant="contained"
               color="primary"
+              onClick={handleProp}
             >
               SUBMIT &nbsp;
-            {loading && <CircularProgress size={'15px'} style={{color:'black'}}/>}
+              {loading && <CircularProgress size={'15px'} style={{color:'black'}}/>}
             </Button>
-            
-            </div>
-            <br />
-            <br />
-          </div>
+           </div>
+
+        </div>
         </form>
-      </div>
     </div>
   );
 }

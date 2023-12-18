@@ -2,7 +2,6 @@ import React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState } from "react";
 import { axiosEvent } from "../utils/axiosEvent";
-import Button from "react-bootstrap/Button";
 import detailsRows from "../components/rowMaping";
 
 const columns = [

@@ -40,14 +40,14 @@ const Table = (data) => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Asset No</th>
+                  <th>Asset Model</th>
                   <th>OS Version</th>
                 </tr>
               </thead>
               <tbody>
                 {filter.map((row) => (
                 <tr>              
-                <td>{row.assetNo}</td>
+                <td>{row.assetModel}</td>
                 <td>{row.assetOsVersion}</td>
                 </tr>
                 ))}

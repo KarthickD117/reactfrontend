@@ -22,17 +22,7 @@ import { useDrawingArea } from "@mui/x-charts/hooks";
 import { responsiveFontSizes, styled } from "@mui/material/styles";
 import App1 from "../../App1";
 //table
-import { useEffect, useState } from "react";
-import axios from "axios";
-import MenuItem from "@mui/material/MenuItem";
-import { Select } from "@mui/material";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { useState } from "react";
 import ForumIcon from "@mui/icons-material/Forum";
 import Chatbot from "react-chatbot-kit";
 import "react-chatbot-kit/build/main.css";
@@ -41,12 +31,10 @@ import MessageParser from "../bot/MessageParser";
 import ActionProvider from "../bot/ActionProvider";
 import "../css/chatbot.css";
 import { DataGrid } from "@mui/x-data-grid";
-import ProgressBar from "react-bootstrap/ProgressBar";
 import LinearProgress from "@mui/material/LinearProgress";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
-import { PureComponent } from "react";
 import { AreaChart, Area } from "recharts";
 
 const dataaa = [
@@ -72,18 +60,18 @@ function checkColor(val){
     return 'info'; 
    }
 }
+
 const columns = [
-  { field: "project", headerName: "Project Name", width: 130},
-  { field: "lead", headerName: "Project Lead", width: 130 },
+  { field: "project", headerName: "Project Name", width: 130, flex:1},
+  { field: "lead", headerName: "Project Lead", width: 130, flex:1 },
   {
     field: "progress",
     headerName: "Progress",
     width: 200,
     renderCell: (params) => (
       <Box sx={{ width: "100%", height: "30%", display: "flex" }}>
-        <div style={{ width: "100%", paddingRight: "10%" }}>
+        <div style={{ width: "100%", paddingRight: "10%", alignSelf:'center' }}>
           <LinearProgress
-            style={{}}
             variant= "determinate"
             value={params.value}
             color={checkColor(params.value)}
@@ -91,29 +79,32 @@ const columns = [
         </div>
         <div style={{ width: "100%", marginBottom: "5px" }}>{params.value}%</div>
       </Box>
-    ),
+    ), flex:1,
   },
   {
     field: "assignee",
     headerName: "Assignee",
     width: 130,
+    flex:1,
+    
   },
   {
     field: "status",
     headerName: "Status",
     width: 130,
-    
     renderCell: (params) => (
-      <Button variant={checkColor(params.row.progress)} size="sm">
+      <Button variant={checkColor(params.row.progress)} size="sm" style={{alignSelf:'center'}}>
         {(params.row.progress) === 100 ? 'Completed' : 'In Progress'}
       </Button>
     ),
+    flex:1,
   },
   {
     field: "date",
     headerName: "Due Date",
-    type: "number",
-    width: 100,
+    type: "String",
+    width: 100, 
+    flex:1,
   },
 ];
 
@@ -157,8 +148,18 @@ const Dashboard = () => {
       <App1 />
       <div className="grid-containerr">
         <div className="grid-itemm">
-          <div style={{ height: 370, width: "100%", backgroundColor: "white" }}>
+          <div style={{ height: '100%', width: "100%", backgroundColor: "white" }}>
             <DataGrid
+              sx={{
+                ".MuiTablePagination-displayedRows":{
+                "margin-top":"1em",
+                "margin-bottom":"1em"
+                },
+                ".MuiTablePagination-selectLabel":{
+                  "margin-top":"1em",
+                  "margin-bottom":"1em"
+                }
+              }}
               rows={rows}
               columns={columns}
               initialState={{
@@ -167,7 +168,7 @@ const Dashboard = () => {
                 },
               }}
               pageSizeOptions={[5, 10]}
-              checkboxSelection
+              // checkboxSelection
             />
           </div>
         </div>

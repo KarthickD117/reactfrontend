@@ -8,19 +8,18 @@ import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined"
 import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 import ProfileMenu from "./profile";
-import { filter } from "../../context";
+import { useSearchCtx } from "../utils/customcontext";
 
 const Topbar = () => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
     const colorMode = useContext(ColorModeContext);
-    const [formData, setFormData] = useState('');
-    const val = useContext(filter)
+    const [formData, setFormData] = useSearchCtx();
     const handleChange = (event) => {
-    setFormData(event.target.value)
-    val.filterData=formData
+      setFormData(event.target.value)
   }
-    return ( <Box display="flex" justifyContent="space-between" p={2}>
+    return ( 
+    <Box display="flex" justifyContent="space-between" p={2}>
       <Box
         display="flex"
         backgroundColor={colors.primary[400]}

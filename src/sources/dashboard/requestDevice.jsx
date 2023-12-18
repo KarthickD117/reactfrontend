@@ -1,6 +1,5 @@
 import React from "react";
 import Form from "react-bootstrap/Form";
-import "../css/allocate.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Container from "react-bootstrap/Container";
@@ -16,27 +15,31 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import Button from '@mui/material/Button';
-import {Models} from "../components/confirmModel";
 import { useTheme } from "@mui/material/styles";
 import { tokens } from "../../theme";
 import { devdb } from "../../context";
+import Dialogbox from "../components/dialogbox";
 
-export default function Checkout() {
+export default function RequestDevice() {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const val = useContext(devdb)
-  const [open, setOpen] = useState(false);
-  const handleOpen = (e) => {setOpen(true);
-    setShow({ps_no:empData.ps_no, assetNo:e})
-  }
+  const [open, setOpen] = React.useState(false);
+  const handleClickOpen = (e, data) => {
+    setOpen(true);
+    setShow({assetNo:e, assetModel:data})
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+ 
   const updateData = () => fetchData()
-  const handleClose = () => {setOpen(false)};
-  const emp = useLocation();
-  const empData = Object.fromEntries(emp.state)
+ 
   const [resultArray, setResultArray] = useState([]);
   const [selectedDeviceType, setSelectedDeviceType] = useState("");
   const [selectedDeviceBrand, setSelectedDeviceBrand] = useState("");
-  const [show, setShow] = useState({ps_no:'', assetNo:''}) // setassetnumber
+  const [show, setShow] = useState({ps_no:'', assetNo:'', assetModel:''}) // setassetnumber
   const handleChange = (e) => {
     setSelectedDeviceType(e.target.value)
     setSelectedDeviceBrand("")
@@ -72,29 +75,13 @@ export default function Checkout() {
   const secondFilter = selectedDeviceBrand !== ''
   ? filteredRows.filter((rows) => rows.assetBrand === selectedDeviceBrand)
   : filteredRows;
-
+  console.log(selectedDeviceType, selectedDeviceBrand)
   const navigate = useNavigate();
   const goback = () => {
     navigate("/allocate");
   };
   return (
-    <div className="mainn" style={{ backgroundColor:colors.grey[900]}}>
-      <Container>
-        <Row className="row">
-          <Col sm={10}>
-            <h4>Name: {empData.Firstname}</h4>
-          </Col>
-          <Col sm={2}>
-            {" "}
-            <Button variant="secondary" onClick={goback}>
-              Go Back
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-      <div className="linehandle">
-        <div class="line"></div>
-      </div>
+    <div className="mainn" style={{ backgroundColor:colors.grey[900], width:'97%'}}>
       <Container>
         <Row>
           <Col lg='3'>
@@ -114,20 +101,18 @@ export default function Checkout() {
         </Row>
       </Container>
       <br />
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{width:'99%', marginLeft:'1%'}}>
         <Table
-          sx={{ minWidth: '90%', bgcolor: 'background.paper'}}
-          aria-label="simple table"
-          
+          sx={{ bgcolor: 'background.paper'}}
+          aria-label="simple table"  
         >
           <TableHead>
-            <TableRow >
-              <TableCell width={'50'} align="center">Asset No</TableCell>
+            <TableRow sx={{position:'sticky'}}>
+              <TableCell>Asset No</TableCell>
               <TableCell>Asset Type</TableCell>
               <TableCell>Asset Brand</TableCell>
               <TableCell>Asset Model</TableCell>
               <TableCell>OS Version</TableCell>
-              <TableCell>Asset SerialNo</TableCell>
               <TableCell>Auto Update</TableCell>
               <TableCell>Action</TableCell>
             </TableRow>
@@ -145,17 +130,16 @@ export default function Checkout() {
                 <TableCell>{row.assetBrand}</TableCell>
                 <TableCell>{row.assetModel}</TableCell>
                 <TableCell>{row.assetOsVersion}</TableCell>
-                <TableCell>{row.assetSerialNumber}</TableCell>
                 <TableCell>{row.assetUpdate}</TableCell>
                 <TableCell> 
-                <Button style={{backgroundColor:colors.redAccent[500]}} startIcon={<ShoppingCartIcon/>} variant='contained' disabled={row.assetAvailability !== 'Available'} onClick={()=> handleOpen(row.assetNo)}>REQUEST</Button>
+                <Button style={{backgroundColor:colors.redAccent[500]}} startIcon={<ShoppingCartIcon/>} variant='contained' disabled={row.assetAvailability !== 'Available'} onClick={()=> handleClickOpen(row.assetNo, row.assetModel)}>REQUEST</Button>
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Models open={open} show={show} handleClose={handleClose} events={'request'} updateData={updateData}/>
+      <Dialogbox open={open} handleClose={handleClose} show={show} updateData={updateData}/>
     </div>
   );
 }
