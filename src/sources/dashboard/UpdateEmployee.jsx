@@ -1,19 +1,19 @@
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 import {useLocation, useNavigate} from 'react-router-dom';
-import { useState } from "react";
+import { useContext, useState } from "react";
 import React from "react";
 import { axiosEvent } from "../utils/axiosEvent";
 import '../css/adduser.css'
 import FormData from "../components/addForm";
+import { empdb } from "../../context";
 
 export default function UpdateEmployee() {
+    const val = useContext(empdb)
     const employeeData = useLocation();
     const empData = Object.fromEntries(employeeData.state.entry)
   const [formData, setFormData] = useState(empData);
-  const [selectedOption, setSelectedOption] = useState('')
+  const [message, setMessage] = useState('')
     
   const handleChange = (event) => {
     setFormData({
@@ -23,10 +23,15 @@ export default function UpdateEmployee() {
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
+    console.log('in submit')
     try {
       const response = await axiosEvent.put(`employees/${formData.ps_no}`,
         formData).then(response => {
-        console.log('response of the data is ', response)
+          if(response.status === 200){
+            setMessage('Updated successfully')
+            val.userdb=''
+          }
+        console.log('response of the data is ', response.status)
       });
     } catch (error) {
       console.log(error);
@@ -43,18 +48,21 @@ export default function UpdateEmployee() {
       <fieldset>
         <Form onSubmit={handleSubmit}>
           <FormData formData = {formData} handleChange={handleChange} userlist={employeeData.state.psno}/>
-          <Form.Group as={Row} className="mb-3">
-            <Col xs={2}>
-              <Button variant="outline-primary" type="submit">
+          {message !== '' ?<div className="submit-message">
+              *User Updated successfully
+            </div>:''}
+          <div className="action-group">
+            <div className="add-user">
+            <Button variant="primary" type="submit">
                 Update User
               </Button>
-            </Col>
-            <Col xs={2}>
-              <Button variant="outline-secondary" type="submit" onClick={back}>
+            </div>
+            <div className="go-back">
+            <Button variant="secondary" type="submit" onClick={back}>
                 Go Back
               </Button>
-            </Col>
-          </Form.Group>
+            </div>
+          </div>
         </Form>
       </fieldset>
     </div>

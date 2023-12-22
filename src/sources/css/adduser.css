@@ -4,4 +4,31 @@
     max-height: 87%;
     width: 100%;
 }
-   
+.submit-message{
+    color: green;
+    padding-left: 1%;
+}
+.action-group{
+    display: grid;
+    width: 40%;
+    height: 60px;
+    padding-top: 3%;
+    grid-template-columns: repeat(3, 33.3%);
+    grid-template-rows: 100%;
+}
+.add-user{
+    grid-column: 1;
+    justify-self: left;
+    padding-left: 10px;
+    align-self: center;
+}
+.go-back{
+    grid-column: 2;
+    justify-self: center;
+    align-self: center;
+}
+.create-user{
+    grid-column: 3;
+    justify-self: center;
+    align-self: center;
+}

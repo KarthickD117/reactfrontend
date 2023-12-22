@@ -6,15 +6,21 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import Papa from 'papaparse'
 export default function Roaster() {
   const reader = new FileReader()
   const [rest, setRest] = useState([])
   const [currentTime, setCurrentTime] = useState()
   const changeHandler = (e) => {
-    reader.onload = async (e) => { 
-      const text = (e.target.result)
-    };
-    reader.readAsText(e.target.files[0])
+    if(e.target.files[0].length !== 0){ 
+        Papa.parse(e.target.files[0],{
+        header:true,
+        skipEmptyLines: true,
+        complete : function (re) {
+          setRest(re.data)
+        }
+      })
+    }
   }
   useEffect(() =>{
     const time = new Date()
