@@ -47,7 +47,6 @@ const Sidebar = () => {
       case '/roasterplan': return 'Roaster';
       case '/allocate': return 'Allocate';
       case '/checkin': return 'Check In';
-      case '/checkedin': return 'Checked-in Devices';
       case '/checkout': return 'Check Out';
       case '/checkedout': return 'Checked-out Devices';
       case '/reports': return 'Report';
@@ -175,14 +174,6 @@ const Sidebar = () => {
               collapsed={isCollapsed}
             />
 
-            <Item
-              title="Checked-in Devices"
-              to="/checkedin"
-              icon={<DevicesIcon />}
-              selected={selected}
-              setSelected={setSelected}
-              collapsed={isCollapsed}
-            />
             <Item
               title="Report"
               to="/reports"

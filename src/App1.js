@@ -7,16 +7,25 @@ import { Box } from "@mui/material";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import { styled } from "@mui/material/styles";
 import { CenterFocusStrong } from "@mui/icons-material";
+import { axiosEvent } from "./sources/utils/axiosEvent";
+import { devdb } from "./context";
 
-
-const Gc = () => {
-  const uData = [4000, 3000, 2000, 2780, 1890, 2390, 3490];
+const Gc = ({Data}) => {
+  const gpd = Object.groupBy(Data, ({assetType}) => assetType)
+  var xdata = gpd !=='' ? Object.keys(gpd):''
+  var numOfData = Object.values(gpd).map((row) => 
+    Object.keys(row).length
+  )
+  const uData = [500, 308, 1000, 800, 250, 1300, 1250];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
   const xLabels = [
     "Page A",
     "Page B",
     "Page C",
     "Page D",
+    "Page E",
+    "Page F",
+    "Page G",
     "Page E",
     "Page F",
     "Page G",
@@ -29,15 +38,14 @@ const Gc = () => {
 
           <LineChart
             series={[
-              { data: pData, label: "pv" },
-              { data: uData, label: "uv" },
+              { data: numOfData, label: "Random Data" },
             ]}
-            xAxis={[{ scaleType: "point", data: xLabels }]}
+            xAxis={[{ scaleType: "point", data: xdata }]}
           />
       </div>
     );
 }
-const Gc2 = () => {
+const Gc2 = ({Data}) => {
     const data = [
         { project: 0, value: 10, label: "series A" },
         { project: 1, value: 15, label: "series B" },
@@ -45,6 +53,12 @@ const Gc2 = () => {
         { project: 3, value: 20, label: "series D" },
         { project: 4, value: 20, label: "series E" },
       ];
+    const gpd = Object.groupBy(Data, ({assetType}) => assetType)
+    var xdata = gpd !=='' ? Object.keys(gpd):[]
+    var numOfData = Object.values(gpd).map((row) => 
+      Object.keys(row).length
+    )
+    const resultData = xdata.map((dev,i) => ({project:i,value:numOfData[i], label:dev}))
       //const clrpalette = ['orange', 'red', 'green','blue','lavender','cyan']
     return (
         <div className={'insidegc2'} style={{ height:'300px'}}>
@@ -52,7 +66,7 @@ const Gc2 = () => {
             //colors={clrpalette}
             margin={{ top: 50, bottom: 50, left: 50, right:50 }}
             series={[
-              { data,
+              { data:data,
                 highlightScope: { faded: "global", highlighted: "item" },
                 faded: { innerRadius: '30', additionalRadius: -30 },
               },
@@ -68,8 +82,6 @@ const Gc2 = () => {
                 fill: "Black",
               },
             }}
-
-            
           />
         </div>
     )
@@ -141,14 +153,44 @@ const Gc4 = () => {
 
 
 function App1() {
+  const val = React.useContext(devdb)
+  const [resultArray, setResultArray] = React.useState([])
+  const fetchData = async () => {
+    try{
+    const res = 
+    await axiosEvent
+      .get("devices/")
+      .then((response) => {
+        setResultArray(response.data.data)
+        val.assetdb = (response.data.data);
+        val.hasPerm = response.data.perm
+      })
+    }
+      catch(err){console.log(err)} ;
+  };
   
+  React.useEffect(() => { 
+    if (val.assetdb===''){ 
+      fetchData();
+    } else {
+    setResultArray(val.assetdb)
+    }
+  }, []);
+  if(resultArray.length === 0){
+    return null
+  }
+  const gpd = Object.groupBy(resultArray, ({assetType}) => assetType)
+  var xdata = Object.keys(gpd)
+  var numOfData = Object.values(gpd).map((row) => 
+    Object.keys(row).length
+  )
   return (
     <div style={{display:"flex"}}>
       <div style={{flex:0.6}}></div>
       <div style={{flex:1}}>
     <Carousel>
-        <Gc />
-        <Gc2 />
+        <Gc Data={resultArray} />
+        <Gc2 Data={resultArray}/>
         <Gc3 />
         <Gc4 />
     </Carousel>

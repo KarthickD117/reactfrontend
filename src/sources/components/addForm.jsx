@@ -37,15 +37,15 @@ const FormData = ({ formData,handleChange}) => {
     <div>
      <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
       <Form.Label column sm={2}>
-              Employee ID
+              Employee ID<span style={{ color: "red" }}>*</span>
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type="Employee ID" 
+              <Form.Control  required type="number" 
                 placeholder="Employee ID"
                 isInvalid={checkform()}
                 name="ps_no" value={formData.ps_no || ""} 
                 onChange={handleChange} />
-                <Form.Control.Feedback type="invalid">
+                <Form.Control.Feedback type="invalid" >
                   User already exists
                 </Form.Control.Feedback>
             </Col>
@@ -56,10 +56,13 @@ const FormData = ({ formData,handleChange}) => {
             controlId="formHorizontalPassword"
           >
             <Form.Label column sm={2}>
-              First Name
+              First Name<span style={{ color: "red" }}>*</span>
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type=" First Name" placeholder="First Name" value={formData.Firstname || ""} name="Firstname" onChange={handleChange} />
+              <Form.Control required type="text" placeholder="First Name" isInvalid={formData.Firstname ===''} value={formData.Firstname || ""} name="Firstname" onChange={handleChange} />
+              <Form.Control.Feedback type="invalid">
+                Please fill out this field
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>
 
@@ -68,7 +71,10 @@ const FormData = ({ formData,handleChange}) => {
               Last Name
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type=" Last Name" placeholder="Last Name " value={formData.Lastname || ""} name="Lastname" onChange={handleChange}/>
+              <Form.Control required type="text" placeholder="Last Name " isInvalid={formData.Lastname ===''} value={formData.Lastname || ""} name="Lastname" onChange={handleChange}/>
+              <Form.Control.Feedback type="invalid">
+                Please fill out this field
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>
 
@@ -103,7 +109,10 @@ const FormData = ({ formData,handleChange}) => {
               Role
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type=" Role" placeholder=" Role" value={formData.Designation || ""} name="Designation"  onChange={handleChange}/>
+              <Form.Control required isInvalid={formData.Designation ===''} type=" text" placeholder=" Role" value={formData.Designation || ""} name="Designation"  onChange={handleChange}/>
+              <Form.Control.Feedback type="invalid">
+                Please fill out this field
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>
 
@@ -112,7 +121,10 @@ const FormData = ({ formData,handleChange}) => {
               Mobile No
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type="Mobile NO" placeholder="Mobile" value={formData.Contact || ""} name="Contact" onChange={handleChange} />
+              <Form.Control required isInvalid={formData.Contact ===''} type="number" placeholder="Mobile" value={formData.Contact || ""} name="Contact" onChange={handleChange} />
+              <Form.Control.Feedback type="invalid">
+                Please fill out this field
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>     
 
@@ -121,7 +133,10 @@ const FormData = ({ formData,handleChange}) => {
               LTIM Mail
             </Form.Label>
             <Col sm={5}>
-              <Form.Control type="Address" placeholder="Enter Mail" value={formData.LTIM_MailID || ""} name="LTIM_MailID" onChange={handleChange}/>
+              <Form.Control  required isInvalid={formData.LTIM_MailID ===''} type="text" placeholder="Enter Mail" value={formData.LTIM_MailID || ""} name="LTIM_MailID" onChange={handleChange}/>
+              <Form.Control.Feedback type="invalid">
+                Please fill out this field
+              </Form.Control.Feedback>
             </Col>
           </Form.Group>
           </div>  

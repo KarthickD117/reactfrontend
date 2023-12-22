@@ -4,6 +4,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 export default function Roaster() {
   const reader = new FileReader()
@@ -12,7 +13,6 @@ export default function Roaster() {
   const changeHandler = (e) => {
     reader.onload = async (e) => { 
       const text = (e.target.result)
-      console.log(text)
     };
     reader.readAsText(e.target.files[0])
   }
@@ -22,11 +22,16 @@ export default function Roaster() {
   })
   return (
     <>
-    <div style={{justifyContent:'flex-end'}}>
+    <div style={{height:'80px'}}>
       <Button
-      sx={{height:'20px', width:'50px'}}
-      variant="outlined"
+      sx={{height:'35px', width:'100px', top:'50%', left:'100%', transform:'translate(-110%, -50%)', backgroundColor:'blue',
+      '&:hover': {
+        backgroundColor: 'lightblue',
+        color: '#3c52b2',
+    },}}
+      variant="contained"
       name="filehandler"
+      startIcon={<CloudUploadIcon />}
       onChange={changeHandler}
       component='label'
       accept='.csv'
@@ -87,7 +92,7 @@ export default function Roaster() {
         </ListGroup.Item>
       </ListGroup>
     </div>
-    <div class="grid-item" style={{height:'100%'}}>
+    <div className="grid-item" style={{height:'100%'}}>
       <div className="text">
         <h6>SHIFT 2</h6>
       </div>

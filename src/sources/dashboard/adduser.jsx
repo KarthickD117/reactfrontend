@@ -9,6 +9,7 @@ import { axiosEvent } from "../utils/axiosEvent";
 import '../css/adduser.css'
 import FormData from "../components/addForm";
 import { empdb } from "../../context";
+import { getSessionStorage } from "../utils/sessionStorage";
 
 export default function UserData() {
   const val = useContext(empdb)
@@ -16,6 +17,7 @@ export default function UserData() {
   const empData = (employeeData.state)
   const [formData, setFormData] = useState({});
   const [message, setMessage] = useState('')
+  const [errMsg, setErrmsg] = useState('')
 
   const handleChange = (event) => {
     setFormData({
@@ -32,12 +34,10 @@ export default function UserData() {
         if (response.status === 201){
           setMessage(response.data)
           val.userdb = ''
-          setTimeout(() => {
-            back()
-          }, 3000);
         }
       });
     } catch (error) {
+      setErrmsg('Error Occured')
       console.log(error);
     }
   };
@@ -51,21 +51,26 @@ export default function UserData() {
     <div className="form">
         <Form onSubmit={handleSubmit}>
           <FormData formData = {formData} handleChange={handleChange} userlist={empData}/>
-          {message ==='' ? <Form.Group as={Row} className="mb-3">
+          <Form.Group as={Row} className="mb-3">
              <Col xs={2}>
-              <Button variant="outline-primary" type="submit">
+              <Button variant="primary" type="submit">
                 Add User
               </Button>
             </Col>
             <Col xs={2}>
-              <Button variant="outline-secondary" type="submit" onClick={back}>
+              <Button variant="secondary" type="submit" onClick={back}>
                 Go Back
-              </Button>
+              </Button>          
             </Col>
-          </Form.Group> : <div style={{marginTop:'40px', marginLeft:'10px', color:'green'}}>
-                User added successfully will navigate to userprofile in few seconds
-                </div>
-            }
+            {message !== '' ?<Col xs={4}><div style={{marginTop:'5px', color:'green', fontSize:'15px'}}>
+                User added successfully
+                </div></Col>: ''}
+            {message !== '' && getSessionStorage('isSuperUser') === "true" ?<Col xs={2}>
+              <Button variant="primary" type="button" onClick={back}>
+                 Create user
+              </Button>          
+            </Col>: ''}
+          </Form.Group> 
         </Form>
     </div>
   );

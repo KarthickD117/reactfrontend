@@ -47,7 +47,7 @@ export default function Dialogbox ({open, handleClose, show, updateData}) {
           setSelectedUser({ps_no:Number(getSessionStorage('username')), assetNo:Number(show.assetNo)})
         }
       }, []);
-      console.log('ad',userDetail.isAdmin,'su',getSessionStorage('isAdmin') )
+
       const handleSubmit = async (e) => {
         console.log(show.assetNo, selectedUser.ps_no)
         e.preventDefault();

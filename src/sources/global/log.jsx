@@ -41,15 +41,19 @@ export default function Login() {
         setSessionStorage('username', response.data.username)
         setSessionStorage('firstname',response.data.firstname)
         setSessionStorage('isAdmin', response.data.isAdmin)
-        val.isSuperuser = response.data.isSuperUser
-        val.isAdmin= response.data.isAdmin
+        setSessionStorage('isSuperUser',response.data.isSuperUser)
         navigate("/");
         window.location.reload()
-        
       });
     } catch (error) {
       setLoading(false)
-      setErrMsg('Invalid Username or Password')
+      if(error.code ==='ERR_NETWORK'){
+        setErrMsg('* Network Error, Please try again')
+      }
+      else if (error.code === 'ERR_BAD_REQUEST'){
+        setErrMsg('* Invalid Credentials')
+      }
+      
     }
   };
   const handleChange = (event) => {
@@ -100,6 +104,9 @@ export default function Login() {
                     label="Password"
                   />
               </FormControl>
+           </div>
+           <div style={{gridArea:'4/2/5/4', alignSelf:'flex-end', color:'red', fontSize:'13px'}}>
+           {errMsg}
            </div>
            <div className="btn">
            <Button disabled={loading}
