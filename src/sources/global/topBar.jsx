@@ -25,7 +25,7 @@ const Topbar = () => {
         backgroundColor={colors.primary[400]}
         borderRadius="3px"
       >
-        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" name="filter" onChange={handleChange}/>
+        <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" name="filter" onChange={handleChange} value={formData ? formData : ""}/>
         <IconButton type="submit" sx={{ p: 1 }}>
           <SearchIcon />
         </IconButton>

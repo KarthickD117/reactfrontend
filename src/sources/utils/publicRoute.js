@@ -1,5 +1,5 @@
-import { Outlet, Navigate } from 'react-router-dom'
-import { getSessionStorage } from './sessionStorage';
+// import { Outlet, Navigate } from 'react-router-dom'
+// import { getSessionStorage } from './sessionStorage';
 
 //const PublicRoutes = ({authic}) => {
     //const isUser = getSessionStorage('isUser')

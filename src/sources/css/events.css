@@ -1,0 +1,45 @@
+:root {
+    --fc-border-color: black;
+    --fc-daygrid-event-dot-width: 5px;
+  }
+a{
+    text-decoration: none;
+}
+
+td [role='gridcell']:hover{
+    cursor: pointer;
+    background-color: lightblue;
+}
+.fc-event-title-container{
+    cursor: move;
+}
+.add-event-container{
+    display: grid;
+    height: 170px;
+    grid-template-columns: 30% 70%;
+    grid-template-rows: 30% 40% 40%;
+    row-gap: 1px;
+}
+.event-name{
+    grid-area: 1/1/1/1;
+    margin-top: 5%;
+}
+.event-input{
+    grid-area: 1/2/1/2;
+}
+.date-event{
+    grid-area: 2/1/2/1;
+    align-self: center;
+}
+.start-date-input{
+    grid-area: 2/2/2/2;
+    width: max-content;
+}
+.end-date-event{
+    grid-area: 3/1/3/1;
+    align-self: center;
+}
+.end-date-input{
+    grid-area: 3/2/3/2;
+    width: max-content;
+}
