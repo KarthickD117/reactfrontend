@@ -7,20 +7,64 @@ import Col from "react-bootstrap/Col";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import Papa from 'papaparse'
+import { axiosEvent } from "../utils/axiosEvent";
 export default function Roaster() {
   const reader = new FileReader()
-  const [rest, setRest] = useState([])
+  const [rest, setRest] = useState({RoasterMonth:'',RoasterPlan:''})
+  const vall = {RoasterMonth:'', RoasterPlan:''}
+  var name = ''
   const [currentTime, setCurrentTime] = useState()
+  const arr = []
   const changeHandler = (e) => {
-    if(e.target.files[0].length !== 0){ 
+    name = e.target.files[0].name.replace('.csv','')
+    console.log(e.target.files[0].name)
+    console.log('hi')
         Papa.parse(e.target.files[0],{
-        header:true,
         skipEmptyLines: true,
         complete : function (re) {
-          setRest(re.data)
+          console.log(re.data)
+          setRest({RoasterMonth:JSON.stringify(name).replaceAll("\"",''), RoasterPlan:cvtToObject(re.data)})
+          vall.RoasterMonth=name
         }
       })
+    console.log(rest)
+    e.target.value = "";
+  }
+  function cvtToObject(data){
+    var ar = data.map(r => r[0].split(','))
+    var fv = ar.shift()
+    ar = ar.map(r=> r.map(ro => JSON.stringify(ro).replaceAll("\"",'')))
+    fv = fv.map(r => JSON.stringify(r).replaceAll("\"",''))
+    var obj ={}
+    const val = []
+    ar.map(r => {
+        r.forEach((row,i) => {
+          obj[fv[i]]=row
+        })
+        val.push((obj))
+        obj ={}
+      }
+    )
+    return val
+  }
+
+  const handleSubmit = async (event) => {
+    const vaal = {"RoasterMonth": (rest.RoasterMonth), "RoasterPlan":JSON.stringify(rest.RoasterPlan)}
+    event.preventDefault();
+    try {
+      await axiosEvent.post(
+        "roaster/viewroaster/", vaal
+      ).then(response => {
+        console.log(response)
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
+
+  const handleClick =(e) =>{ // for submiting data to backend
+    handleSubmit(e)
+
   }
   useEffect(() =>{
     const time = new Date()
@@ -40,7 +84,6 @@ export default function Roaster() {
       startIcon={<CloudUploadIcon />}
       onChange={changeHandler}
       component='label'
-      accept='.csv'
       >
       <input
       type="file"
@@ -49,7 +92,7 @@ export default function Roaster() {
       />
       import
       </Button>
-    </div>
+</div>
     <div className="grid-container">
     <div className="grid-item" style={{height:'100%'}}>
       <div className="text">
@@ -245,7 +288,7 @@ export default function Roaster() {
         </ListGroup>
       </div>
     </div>
-  </div>
+    </div>
   </>
   );
 }

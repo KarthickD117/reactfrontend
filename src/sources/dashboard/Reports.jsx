@@ -46,7 +46,7 @@ export default function Report() {
     fetchData(val)
     }
     if (datePicker === 'date') {
-      const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1))+'-'+e.$D)
+      const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1))+'-'+((e.$D < 10)?('0'+(e.$D)):(e.$D)))
       fetchData(val)
     }
   }
