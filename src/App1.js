@@ -3,12 +3,11 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import { LineChart } from "@mui/x-charts/LineChart";
 import { PieChart, pieArcClasses } from "@mui/x-charts/PieChart";
 import Carousel from 'react-material-ui-carousel'
-import { Box } from "@mui/material";
 import { useDrawingArea } from "@mui/x-charts/hooks";
 import { styled } from "@mui/material/styles";
-import { CenterFocusStrong } from "@mui/icons-material";
 import { axiosEvent } from "./sources/utils/axiosEvent";
 import { devdb } from "./context";
+import Grid from '@mui/material/Grid'
 
 const Gc = ({Data}) => {
   const gpd = Object.groupBy(Data, ({assetType}) => assetType)
@@ -16,6 +15,9 @@ const Gc = ({Data}) => {
   var numOfData = Object.values(gpd).map((row) => 
     Object.keys(row).length
   )
+  xdata.splice(0,0,0)
+  numOfData.splice(0,0,null)
+  console.log( xdata, typeof numOfData)
   const uData = [500, 308, 1000, 800, 250, 1300, 1250];
   const pData = [2400, 1398, 9800, 3908, 4800, 3800, 4300];
   const xLabels = [
@@ -33,14 +35,15 @@ const Gc = ({Data}) => {
     return (
       <div
         className={"insidegc"}
-        style={{ height: "300px", display: "flex", overflow: "hidden" }}
+        
       >
-
           <LineChart
             series={[
-              { data: numOfData, label: "Random Data" },
+              { data: numOfData, label: "Device Data" },
             ]}
             xAxis={[{ scaleType: "point", data: xdata }]}
+            height={300}
+            margin={{right:80,left:80}}
           />
       </div>
     );
@@ -133,7 +136,7 @@ const Gc4 = () => {
     return (
         <div className={'insidegc2'} style={{ height:'300px'}}>
        <BarChart
-            sx={{marginLeft:'30px'}}
+            margin={{left:80,right:80}}
             xAxis={[
               { scaleType: "band", data: ["group A", "group B", "group C"] },
             ]}
@@ -143,8 +146,7 @@ const Gc4 = () => {
               { data: [2, 5, 6] },
               { data: [3, 5, 6] },
             ]}
-            width={400}
-            height={300}
+            
           />
         </div>
     )
@@ -185,18 +187,18 @@ function App1() {
     Object.keys(row).length
   )
   return (
-    <div style={{display:"flex"}}>
-      <div style={{flex:0.6}}></div>
-      <div style={{flex:1}}>
-    <Carousel>
+    <Grid container>
+      <Grid item xs={3}></Grid>
+      <Grid item xs={6}>
+      <Carousel>
         <Gc Data={resultArray} />
         <Gc2 Data={resultArray}/>
         <Gc3 />
         <Gc4 />
-    </Carousel>
-    </div>
-    <div style={{flex:0.8}}></div>
-    </div>
+      </Carousel>
+      </Grid>
+      <Grid item xs={3}></Grid>
+    </Grid>  
   )
 }
 export default App1;

@@ -21,10 +21,11 @@ import '../css/dialogbox.css'
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { getSessionStorage } from "../utils/sessionStorage";
 import { useSearchCtx } from "../utils/customcontext";
+import TextField from '@mui/material/TextField';
+import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 
 export default function RequestDevice() {
   const theme = useTheme();
@@ -100,8 +101,14 @@ export default function RequestDevice() {
     }
   }, []);
 
-  const handleEmpChange = (e) => {
-    setSelectedUser({ps_no:Number(e.target.value), assetNo:Number(show.assetNo)})
+  const handleEmpChange = (e, value) => {
+    if(value !== null){
+      setSelectedUser({ps_no:Number(value.ps_no), assetNo:Number(show.assetNo)})
+    }
+    else{
+      setSelectedUser({ps_no:'', assetNo:Number(show.assetNo)})
+    }
+    //setSelectedUser({ps_no:Number(value.ps_no), assetNo:Number(show.assetNo)})
   };
 
   const handleEvent = () => {
@@ -151,6 +158,11 @@ export default function RequestDevice() {
       return fd
     }
   }
+  const filterOptions = createFilterOptions({
+    matchFrom: 'start',
+    stringify: (option) => option.ps_no+' - '+option.Firstname,
+  });
+  console.log(filters() == null)
   return (
     <div className="mainn" style={{ backgroundColor:colors.grey[900], width:'97%'}}>
       <Container>
@@ -172,7 +184,7 @@ export default function RequestDevice() {
         </Row>
       </Container>
       <br />
-      <TableContainer component={Paper} sx={{width:'99%', marginLeft:'1%'}}>
+     <TableContainer component={Paper} sx={{width:'99%', marginLeft:'1%'}}>
         <Table
           sx={{ bgcolor: 'background.paper'}}
           aria-label="simple table"  
@@ -211,7 +223,7 @@ export default function RequestDevice() {
         </Table>
       </TableContainer>
       <Dialog
-        fullWidth='400px'
+        fullWidth
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
@@ -221,22 +233,38 @@ export default function RequestDevice() {
           {"Device Request"}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-description">
+          
           <div className="container-grid">
             <div className="row1">
               Request {show.assetModel} to &nbsp;
             </div>
             <div className="row2">
-              {getSessionStorage('isAdmin') === 'true' ? <Form.Select size='xs' onChange={handleEmpChange}>
-                <option value=''> Select Employee </option>
-                  {empDetails.map((empName) => <option value={empName.ps_no}>{empName.ps_no} - {empName.Firstname}</option>)}
-                  </Form.Select> : getSessionStorage('username')}
+              {getSessionStorage('isAdmin') === 'true' ? 
+                <Autocomplete
+                  id="filter-demo"
+                  onChange={handleEmpChange}
+                  options={empDetails}
+                  getOptionLabel={(option) => option.ps_no+' - '+option.Firstname}
+                  filterOptions={filterOptions}
+                  isOptionEqualToValue={(option,value) => option.value === value.value}
+                  sx={{ width: 200 }}
+                  renderInput={(params) => 
+                  <TextField {...params} 
+                  sx={{
+                    '& legend': { display: 'none' },
+                    '& fieldset': { top: 0 },
+                    '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.2s ease-in" }
+                    }}
+                  label="Select User"
+                   />
+            }
+              />
+                : getSessionStorage('username')}
               </div>
           </div>
           {errMsg !==''?<div style={{color:'red'}}>
             {errMsg}
           </div>:''}  
-          </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button disabled={selectedUser.ps_no === ''} onClick={handleSubmit}>Request</Button>

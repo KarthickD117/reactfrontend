@@ -15,21 +15,25 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ReplayIcon from "@mui/icons-material/Replay";
 import { useLocation } from 'react-router-dom';
 import { getSessionStorage } from "../utils/sessionStorage";
+import { useSearchCtx } from "../utils/customcontext";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 
 const Item = ({ title, to, icon, selected, setSelected, collapsed }) => {
   const theme = useTheme();
+  const [filterData, setFilterData] = useSearchCtx()
   const colors = tokens(theme.palette.mode);
   return (
-
     <MenuItem
       active={selected === title}
       style={{
         color: colors.grey[100],
       }}
-      onClick={() => setSelected(title)}
+      onClick={() => {
+        setSelected(title)
+        setFilterData('')
+      }}
       icon={icon}
     >
-      
       <Typography>{title}</Typography>
       <Link to={to} />
     </MenuItem>
@@ -51,6 +55,7 @@ const Sidebar = () => {
       case '/checkedout': return 'Checked-out Devices';
       case '/reports': return 'Report';
       case '/tasks': return 'Tasks';
+      case '/calendar': return 'Calendar'
     }
   }
   const theme = useTheme();
@@ -191,7 +196,15 @@ const Sidebar = () => {
               collapsed={isCollapsed}
             />
             <Item
-              title="tasks"
+              title="Calendar"
+              to="/calendar"
+              icon={<CalendarMonthIcon />}
+              selected={selected}
+              setSelected={setSelected}
+              collapsed={isCollapsed}
+            />
+            <Item
+              title="Tasks"
               to="/tasks"
               icon={<TaskIcon />}
               selected={selected}

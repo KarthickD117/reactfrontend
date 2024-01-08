@@ -4,21 +4,18 @@ import Form from "react-bootstrap/Form";
 import { useEffect, useState } from "react";
 import { axiosEvent } from "../utils/axiosEvent";
 import detailsRows from "../components/rowMaping";
-import { Routes, Route, useNavigate } from "react-router-dom";
 import StickyTable from "../components/table";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-import { TextField } from "@mui/material";
+import dayjs from "dayjs";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../theme";
 const columns = [
   { id: "assetNo", label: "Asset No", width: 85 },
   { id: "assetType", label: "Asset Type", width: 85 },
   { id: "assetBrand", label: "Asset Brand", width: 85 },
-  { id: "assetModel", label: "Asset Model", width: 85 },
+  { id: "assetModel", label: "Asset Model", width: 50 },
   { id: "Firstname", label: "Borrower Name", width: 85 },
   { id: "dateBorrowed", label: "Date Borrowed", width: 100 },
   { id: "dateReturned", label: "Return Date", width: 100 },
@@ -26,9 +23,11 @@ const columns = [
 ];
 
 export default function Report() {
-
+  const theme = useTheme()
+  const colors = tokens(theme.palette.mode)
   const [resultArray, setResultArray] = useState([]);
-  const [datePicker, setdatePicker] = useState('date')
+  const [datePicker, setdatePicker] = useState('month')
+  const [initVal, setInitialVal] = useState('')
 
   const fetchData = async (year) => {
     await axiosEvent.get(`devicedate/${year}`)
@@ -38,34 +37,43 @@ export default function Report() {
   const details = detailsRows(resultArray)
   const handleChange= (e)=> {
     setResultArray([])
+    setInitialVal('')
     setdatePicker(e.target.value)
   }
   const handleChangeDate = (e) => {
     if (datePicker === 'month') {
     const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1)))
     fetchData(val)
+    console.log(val)
     }
     if (datePicker === 'date') {
       const val = (e.$d.getFullYear()+'-'+ ((e.$d.getMonth() < 9) ? ('0'+(e.$d.getMonth()+1)) : (e.$d.getMonth()+1))+'-'+((e.$D < 10)?('0'+(e.$D)):(e.$D)))
       fetchData(val)
     }
   }
+  
+  useEffect(() =>{
+    const d = new Date()
+    const currentMonth = d.getFullYear()+'-'+ ((d.getMonth() < 9) ? ('0'+(d.getMonth()+1)) : (d.getMonth()+1))
+    setInitialVal(currentMonth)
+    fetchData(currentMonth)
+  }, [])
   return (
-    <>
-        <Container style={{marginBottom:'10px'}}>
-        <Row>
-          <Col lg="3">
-            <Form.Select size="sm" onChange={handleChange} style={{height:'100%'}}>
-              <option value = 'date'> DATE </option>
-              <option value='month'> MONTH </option>
-            </Form.Select>
-          </Col>
-          <Col>
-          {datePicker =='month' &&
+    <div style={{ height:'92vh'}}>
+    <div style={{display:'grid', gridTemplateColumns:'50% 50%', gridTemplateRows:'100%', width:'50vh',marginLeft:'2.5%', marginBottom:'2%'}}>
+      <div style={{gridArea:'1/1/1/1'}}>
+        <Form.Select size="sm" onChange={handleChange} style={{height:'100%', width:'90%', marginTop:'3%'}}>
+          <option value='month'> MONTH </option>
+          <option value = 'date'> DATE </option>
+        </Form.Select>
+      </div>
+      <div style={{gridArea:'1/2/1/2',  marginTop:'3%'}}>
+      {datePicker =='month' &&
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DatePicker
                 onAccept={handleChangeDate}
-                label={'MM'}
+                label={'MMMM'}
+                value={initVal ? dayjs(initVal) : null}
                 views={["month",'year' ]}
               />
             </LocalizationProvider>} 
@@ -77,11 +85,9 @@ export default function Report() {
             />
           </LocalizationProvider>
             }
-          </Col>
-        </Row>
-        </Container>
-         
+      </div>
+    </div>
     <StickyTable columns={columns} data={details} />
-    </>
+    </div>
   );
 }

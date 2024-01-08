@@ -23,7 +23,7 @@ export default function StickyTable({columns, data}) {
   };
 
   return (
-    <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+    <Paper sx={{ width: '95%', overflow: 'hidden', marginLeft:'2.5%' }}>
       <TableContainer sx={{ maxHeight: 'auto' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>
@@ -42,9 +42,9 @@ export default function StickyTable({columns, data}) {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
+              .map((row, index) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                  <TableRow hover role="checkbox" tabIndex={-1} key={index}>
                     {columns.map((column, index) => {
                       const value = row[column.id];
                       return (
@@ -64,12 +64,12 @@ export default function StickyTable({columns, data}) {
       <TablePagination
       sx={{
         ".MuiTablePagination-displayedRows":{
-        "margin-top":"1em",
-        "margin-bottom":"1em"
+        "marginTop":"1em",
+        "marginBottom":"1em"
         },
         ".MuiTablePagination-selectLabel":{
-          "margin-top":"1em",
-          "margin-bottom":"1em"
+          "marginTop":"1em",
+          "marginBottom":"1em"
         }
       }}
         rowsPerPageOptions={[10, 20]}

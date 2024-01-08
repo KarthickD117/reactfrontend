@@ -29,7 +29,19 @@ export default function DataTable() {
   const [selectedDeviceBrand, setSelectedDeviceBrand] = useState('');
   const [perm, setPerm] = useState(val.hasPerm)
   const [searchData, setSearchData] = useSearchCtx()
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
   const handleChange = (e) => {
+    setPage(0)
     setSelectedDeviceType(e.target.value)
     setSelectedDeviceBrand("")
   };
