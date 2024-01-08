@@ -53,7 +53,7 @@ export default function UpdateEmployee() {
             </div>:''}
           <div className="action-group">
             <div className="add-user">
-            <Button variant="primary" type="submit">
+            <Button variant="primary" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 7)}>
                 Update User
               </Button>
             </div>

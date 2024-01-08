@@ -161,13 +161,13 @@ export default function Formdata() {
 
           <Form.Group as={Row} className="mb-3">
             <Col xs={2}>
-              <Button variant="outline-primary" type="submit">
-                Add Device
+              <Button variant="secondary" type="submit" onClick={back}>
+                Go Back
               </Button>
             </Col>
             <Col xs={2}>
-              <Button variant="outline-secondary" type="submit" onClick={back}>
-                Go Back
+              <Button variant="primary" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 10)}>
+                Add Device
               </Button>
             </Col>
           </Form.Group>
