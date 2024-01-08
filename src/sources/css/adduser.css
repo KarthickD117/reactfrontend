@@ -32,3 +32,10 @@
     justify-self: center;
     align-self: center;
 }
+
+div.form > form > div:nth-child(1) > div:nth-child(n) > label::after{
+    content: "*";
+    display:inline;
+    color:red;
+    margin-left: 2px;
+}

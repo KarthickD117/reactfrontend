@@ -3,4 +3,9 @@
     overflow: auto;
     max-height: 87%;
 }
-   
+div.formdevice > fieldset > form > div:nth-child(n) > label::after{
+    content: "*";
+    display:inline;
+    color:red;
+    margin-left: 2px;
+}
