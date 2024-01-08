@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+import {Button} from "@mui/material";
 import Form from "react-bootstrap/Form";
 import {useLocation, useNavigate} from 'react-router-dom';
 import { useContext, useState } from "react";
@@ -53,12 +53,12 @@ export default function UpdateEmployee() {
             </div>:''}
           <div className="action-group">
             <div className="add-user">
-            <Button variant="primary" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 7)}>
+            <Button variant="contained" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 7)}>
                 Update User
               </Button>
             </div>
             <div className="go-back">
-            <Button variant="secondary" type="submit" onClick={back}>
+            <Button variant="contained" color="secondary" type="button" onClick={back}>
                 Go Back
               </Button>
             </div>

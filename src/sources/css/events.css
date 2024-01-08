@@ -43,3 +43,24 @@ td [role='gridcell']:hover{
     grid-area: 3/2/3/2;
     width: max-content;
 }
+.fc-media-screen{
+    width:90%;
+    height: 70%;
+    padding-left: 5%;
+}
+
+.fc-col-header, .fc-timegrid-body {
+    width: 100% !important;
+
+}
+.fc-scrollgrid-sync-table {
+    width: 100% !important;
+
+}
+.fc-daygrid-body {
+    width: 100% !important;
+
+}
+.fc-daygrid-body-balanced {
+    width: 100% !important;
+}

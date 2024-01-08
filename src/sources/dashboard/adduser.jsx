@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+import { Button } from "@mui/material";
 import Form from "react-bootstrap/Form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useContext } from "react";
@@ -51,12 +51,12 @@ export default function UserData() {
             </div>:''}
           <div className="action-group">
             <div className="add-user">
-            <Button variant="primary" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 7)}>
+            <Button variant="contained" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 7)}>
                 Add User
               </Button>
             </div>
             <div className="go-back">
-            <Button variant="secondary" type="submit" onClick={back}>
+            <Button variant="contained" type="button" onClick={back}>
                 Go Back
               </Button>
             </div>

@@ -1,0 +1,29 @@
+.detailed-report{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    grid-template-rows: repeat(2, 50%)
+}
+.passed-row{
+    grid-area: 1/1/1/1;
+}
+.passed-count{
+    grid-area: 1/2/1/2;
+}
+.failed-row{
+    grid-area: 2/1/2/1;
+}
+.failed-count{
+    grid-area: 2/2/2/2;
+}
+.comment-grid{
+    display: grid;
+    grid-template-columns: max-content max-content;
+}
+.comment-row{
+    grid-area: 1/1/1/1;
+}
+.comment-val{
+    grid-area: 1/2/1/2;
+    background-color: aqua;
+    color: red;
+}

@@ -1,4 +1,4 @@
-import Button from "react-bootstrap/Button";
+import { Button } from "@mui/material";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
@@ -161,12 +161,14 @@ export default function Formdata() {
 
           <Form.Group as={Row} className="mb-3">
             <Col xs={2}>
-              <Button variant="secondary" type="submit" onClick={back}>
+              <Button variant="contained" type="button" onClick={back}>
                 Go Back
               </Button>
             </Col>
             <Col xs={2}>
-              <Button variant="primary" type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 10)}>
+              <Button variant="contained" 
+                sx={{backgroundColor:'blue' }}
+                type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 10)}>
                 Add Device
               </Button>
             </Col>
