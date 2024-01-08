@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import { useNavigate } from "react-router-dom";
 import { devdb } from '../../context';
 import { useSearchCtx } from '../utils/customcontext';
+import { Grid } from '@mui/material';
 const columns = [
   { id: 'assetNo', label: "Device ID", minWidth: 50 },
   { id: 'assetType', label: "Device Type", minWidth: 50 },
@@ -115,32 +116,30 @@ export default function DataTable() {
   console.log(filters())
   return (
     <div className='devicetable'  style={{height: '87%', overflow:"auto"}}>
-    <div className="button" style={{ paddingLeft: 25 }}>
+    <div className="button" style={{ paddingLeft: '2.5%' }}>
         {perm && <Button variant="primary" onClick={navigatee} disabled={!perm}>
           Add Device
         </Button>}
       </div>
-      <Container>
-        <Row>
-          <Col lg="3">
-            <Form.Select size="sm" onChange={handleChange}>
+      <Grid container sx={{paddingLeft:'2.5%', paddingTop:'2%'}} columnGap={2}>
+        <Grid item xs={2}>
+        <Form.Select size="sm" onChange={handleChange}>
               <option value=''>Device Type</option>
               
               {setOfDeviceType.map((deviceType, index) => <option key={index} value={deviceType}> {deviceType} </option>)}
             </Form.Select>
-          </Col>
-          <Col lg="3">
-           <Form.Select key={selectedDeviceType} size="sm" onChange={handleBrandChange} >
+        </Grid>
+        <Grid item xs={2}>
+        <Form.Select key={selectedDeviceType} size="sm" onChange={handleBrandChange} >
             <option value=''>Device Brand</option>
               
               {setOfDeviceBrand.map((deviceBrand, index) => 
                 <option key={index} value={deviceBrand}> {deviceBrand} </option>)
               }
             </Form.Select>
-          </Col>
-        </Row>
-      </Container>
-      <div className="table" style={{padding:25}}>
+        </Grid>
+      </Grid>
+      <div className="table" style={{paddingTop:'2%'}}>
     <StickyTable columns={columns} data={filters()}/>
     </div>
     </div>
