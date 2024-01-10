@@ -1,7 +1,7 @@
 import * as React from "react";
 import { DataGrid } from "@mui/x-data-grid";
 import { useEffect, useState, useContext } from "react";
-import Button from "react-bootstrap/Button";
+import Button from '@mui/material/Button';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import SearchIcon from '@mui/icons-material/Search';
@@ -84,7 +84,7 @@ export default function UserDataTable() {
   
     <div className="user-table" style={{height: '87%', overflow:"auto"}}>
       <div className="button" style={{ paddingLeft: 25 }}>
-        {perm && <Button variant="primary" disabled={!perm} onClick={navigatee}>
+        {perm && <Button variant="contained" sx={{backgroundColor:'blue', '&:hover':{backgroundColor:'#005580'}}} disabled={!perm} onClick={navigatee}>
           Add User
         </Button>}
       </div>

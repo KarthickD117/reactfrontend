@@ -3,10 +3,7 @@ import Form from "react-bootstrap/Form";
 import { useEffect, useState, useContext } from "react";
 import { axiosEvent } from "../utils/axiosEvent";
 import StickyTable from '../components/table';
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
+import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
 import { devdb } from '../../context';
 import { useSearchCtx } from '../utils/customcontext';
@@ -117,7 +114,7 @@ export default function DataTable() {
   return (
     <div className='devicetable'  style={{height: '87%', overflow:"auto"}}>
     <div className="button" style={{ paddingLeft: '2.5%' }}>
-        {perm && <Button variant="primary" onClick={navigatee} disabled={!perm}>
+        {perm && <Button variant="contained" sx={{backgroundColor:'blue', '&:hover':{backgroundColor:'#005580'}}} onClick={navigatee} disabled={!perm}>
           Add Device
         </Button>}
       </div>

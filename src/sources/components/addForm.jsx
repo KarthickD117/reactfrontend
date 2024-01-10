@@ -57,7 +57,7 @@ const FormData = ({ formData,handleChange}) => {
     <div>
      <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
       <Form.Label column sm={2}>
-              Employee ID<span style={{ color: "red" }}>*</span>
+              Employee ID
             </Form.Label>
             <Col sm={5}>
               <Form.Control  required type="number" 
@@ -76,7 +76,7 @@ const FormData = ({ formData,handleChange}) => {
             controlId="formHorizontalPassword"
           >
             <Form.Label column sm={2}>
-              First Name<span style={{ color: "red" }}>*</span>
+              First Name
             </Form.Label>
             <Col sm={5}>
               <Form.Control required type="text" placeholder="First Name" isInvalid={formData.Firstname ===''} value={formData.Firstname || ""} name="Firstname" onChange={handleChange} />

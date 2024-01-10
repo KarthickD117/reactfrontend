@@ -34,9 +34,12 @@ const Gc = ({ Data }) => {
     <div className={"insidegc"}>
       <LineChart
         series={[{ data: numOfData, label: "Device Data" }]}
-        xAxis={[{ scaleType: "point", data: xdata }]}
-        height={300}
-        margin={{ right: 80, left: 80 }}
+        xAxis={[{ scaleType: "point", data: xdata, tickLabelStyle:{
+          angle: 30,
+          textAnchor: 'start',
+          fontSize: 12,} }]}
+          height={300}
+          margin={{ right: 80, left: 80, bottom:70, top:10 }}
       />
     </div>
   );

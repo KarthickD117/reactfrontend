@@ -26,6 +26,7 @@ import { getSessionStorage } from "../utils/sessionStorage";
 import { useSearchCtx } from "../utils/customcontext";
 import TextField from '@mui/material/TextField';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import { Grid } from "@mui/material";
 
 export default function RequestDevice() {
   const theme = useTheme();
@@ -159,32 +160,28 @@ export default function RequestDevice() {
     }
   }
   const filterOptions = createFilterOptions({
-    matchFrom: 'start',
+    matchFrom: 'end',
     stringify: (option) => option.ps_no+' - '+option.Firstname,
   });
   console.log(filters() == null)
   return (
-    <div className="mainn" style={{ backgroundColor:colors.grey[900], width:'97%'}}>
-      <Container>
-        <Row>
-          <Col lg='3'>
-            <Form.Select size="sm" onChange={handleChange}>
-              <option value=''>Device Type</option>
-              
+    <div className="mainn" style={{ backgroundColor:colors.grey[900], overflowY:"auto", width:'97%'}}>
+      <Grid container sx={{paddingLeft:'1.5%', paddingTop:'2%' }} columnGap={2}>
+        <Grid item xs={3}>
+          <Form.Select size="sm" onChange={handleChange}>
+              <option value=''>Device Type</option>            
               {setOfDeviceType.map((deviceType) => <option value={deviceType}> {deviceType} </option>)}
+          </Form.Select>
+        </Grid>
+        <Grid item xs={3}>
+          <Form.Select size="sm" key={selectedDeviceType} onChange={handleBrandChange}>
+            <option value=''>Device Type</option> 
+            {setOfDeviceBrand.map((deviceBrand) => <option value={deviceBrand}> {deviceBrand} </option>)}
             </Form.Select>
-          </Col>
-          <Col lg='3'>
-            <Form.Select size="sm" key={selectedDeviceType} onChange={handleBrandChange}>
-            <option value=''>Device Type</option>
-              
-              {setOfDeviceBrand.map((deviceBrand) => <option value={deviceBrand}> {deviceBrand} </option>)}
-            </Form.Select>
-          </Col>
-        </Row>
-      </Container>
+        </Grid>
+      </Grid>
       <br />
-     <TableContainer component={Paper} sx={{width:'99%', marginLeft:'1%'}}>
+     <TableContainer component={Paper} sx={{width:'97%',marginLeft:'1.5%'}}>
         <Table
           sx={{ bgcolor: 'background.paper'}}
           aria-label="simple table"  
@@ -226,10 +223,10 @@ export default function RequestDevice() {
         fullWidth
         open={open}
         onClose={handleClose}
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
+        aria-labelledby="request-dialog-title"
+        aria-describedby="request-dialog-description"
       >
-        <DialogTitle id="alert-dialog-title">
+        <DialogTitle id="request-dialog-title">
           {"Device Request"}
         </DialogTitle>
         <DialogContent>
@@ -248,6 +245,7 @@ export default function RequestDevice() {
                   filterOptions={filterOptions}
                   isOptionEqualToValue={(option,value) => option.value === value.value}
                   sx={{ width: 200 }}
+                  size="small"
                   renderInput={(params) => 
                   <TextField {...params} 
                   sx={{
