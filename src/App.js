@@ -24,6 +24,8 @@ import PublicRoutes from "./sources/utils/publicRoute";
 import RequestDevice from "./sources/dashboard/requestDevice";
 import { setSessionStorage, getSessionStorage} from "./sources/utils/sessionStorage";
 import PageConstruct from "./sources/components/constructionImage";
+import Tasks from "./sources/dashboard/Tasks";
+import TaskView from "./sources/dashboard/detailedTask";
 
 function App() {
   const [theme, colorMode] = useMode();
@@ -54,7 +56,8 @@ function App() {
               <Route path="/reports" element={<Report />} />
               <Route path="/roasterplan" element={<Roaster />} />
               <Route path="/allocate" element={<RequestDevice />} />
-              <Route path="/checkout" element={<Checkout />} />
+              <Route path="/tasks" element={<Tasks />} />
+              <Route path="/tasksview" element={<TaskView />} />
               <Route path="/checkin" element={<CheckIn />} />
               <Route path="/checkedin" element={<CheckedIn />} />
               <Route path="/checkedout" element={<CheckedOut />} />
