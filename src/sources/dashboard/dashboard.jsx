@@ -36,6 +36,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DateCalendar } from "@mui/x-date-pickers/DateCalendar";
 import { AreaChart, Area } from "recharts";
+import Chat from "../bot/chatbot";
 
 const dataaa = [
   {name: "Jan",uv: 4000,pv: 2400,amt: 2400,},
@@ -152,12 +153,12 @@ const Dashboard = () => {
             <DataGrid
               sx={{
                 ".MuiTablePagination-displayedRows":{
-                "margin-top":"1em",
-                "margin-bottom":"1em"
+                "marginTop":"1em",
+                "marginBottom":"1em"
                 },
                 ".MuiTablePagination-selectLabel":{
-                  "margin-top":"1em",
-                  "margin-bottom":"1em"
+                  "marginTop":"1em",
+                  "marginBottom":"1em"
                 }
               }}
               rows={rows}
@@ -210,12 +211,11 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="bot">
+      <div className="bot-chat">
         <button className="botpopup" onClick={handlebot}>
           <ForumIcon />
         </button>
       </div>
-      <div style={{ display: isShown ? "block" : "none" }}>
         {isShown && (
           <Chatbot
             config={config}
@@ -223,7 +223,6 @@ const Dashboard = () => {
             actionProvider={ActionProvider}
           />
         )}
-      </div>
     </div>
   );
 };

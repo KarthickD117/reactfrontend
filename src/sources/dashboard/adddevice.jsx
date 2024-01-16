@@ -42,7 +42,7 @@ export default function Formdata() {
     };
 
   return (
-    <div class="formdevice">
+    <div className="formdevice">
       <fieldset>
         <Form onSubmit={handleSubmit}>
           <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
