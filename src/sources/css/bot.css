@@ -49,9 +49,6 @@ div.bot-container > div:nth-child(even){
     padding-bottom: 2px;   
     margin-right: 2px;
 }
-table, td, th {
-    border: 1px solid black;
-  }
 
 .img-item{
     mix-blend-mode: multiply;
