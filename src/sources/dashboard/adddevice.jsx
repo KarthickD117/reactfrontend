@@ -8,10 +8,13 @@ import '../css/adddevice.css';
 import * as React from "react";
 import { axiosEvent } from "../utils/axiosEvent";
 import { devdb } from "../../context";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
 
 export default function Formdata() {
   const val = useContext(devdb)
   const [formData, setFormData] = useState({});
+  const [msg, setmsg] = useState({msg:'', color:''})
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -20,24 +23,33 @@ export default function Formdata() {
   }
   const assetNoList = val.assetdb.map(row => row.assetNo)
   console.log(assetNoList.includes(Number(formData.assetNo)))
+  const styles = (wid) => {
+    return {
+        width:wid,
+        marginTop:'2%',
+        '& legend': { display: 'none' },
+        '& fieldset': { top: 0 },
+        '& .MuiInputLabel-shrink': { opacity: 0, transition: "all 0.2s ease-in" }
+    }
+}
   const handleSubmit = async (event) => { 
     event.preventDefault();
     try {
       await axiosEvent.post("devices/",formData)
         .then(response => {
-          if (response.status === 201){
-          val.assetdb = ''
-          }
           console.log('response is ', response)
+          setmsg({msg:'Device has been saved', color:'green'})
           }
         );
     }catch (error) {
       console.log(error);
+      setmsg({msg:'Error Occured. Try Again', color:'red'})
     }
   };
 
   const navigate = useNavigate();
     const back = () => {
+      val.assetdb = ''
       navigate("/devicemanagement");
     };
 
@@ -45,134 +57,146 @@ export default function Formdata() {
     <div className="formdevice">
       <fieldset>
         <Form onSubmit={handleSubmit}>
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+          <Grid container className="deviceFormPage" paddingLeft={'2%'} rowGap={2}>
+            <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset No
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control isInvalid={assetNoList.includes(Number(formData.assetNo))} type=" AssetNo" placeholder=" Asset No"  name="assetNo" onChange={handleChange}/>
-              <Form.Control.Feedback type="invalid">
-                  Asset already exists
-            </Form.Control.Feedback>
-            </Col>
-          </Form.Group>
-
-          <Form.Group
-            as={Row}
-            className="mb-3"
-            controlId="formHorizontalPassword"
-          >
-            <Form.Label column sm={2}>
+            </Grid>
+            <Grid item xs={9}>
+              <TextField
+                sx={styles('60%')}
+                onChange={handleChange}
+                id="asset-no"
+                name="assetNo"
+                value={formData.assetNo || ''}
+                error={assetNoList.includes(Number(formData.assetNo))}
+                helperText={assetNoList.includes(Number(formData.assetNo)) ? 'Asset already exists':''}
+              />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset Type
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control type=" Asset_Type" placeholder=" Asset Type" name="assetType" onChange={handleChange} />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-type"
+                  name="assetType"
+                  value={formData.assetType || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset Brand
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control type="  Asset_Brand" placeholder="  Asset Brand" name="assetBrand" onChange={handleChange}/>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-brand"
+                  name="assetBrand"
+                  value={formData.assetBrand || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset Model
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control type="  Asset_Model" placeholder="Asset Model" name="assetModel" onChange={handleChange}/>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-Model"
+                  name="assetModel"
+                  value={formData.assetModel || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Year
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control type=" Year" placeholder=" Year" name="assetYear" onChange={handleChange}/>
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-year"
+                  name="assetYear"
+                  value={formData.assetYear || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               OS Version
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control type="OS_Version" placeholder="OS Version" name="assetOsVersion" onChange={handleChange} />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-osversion"
+                  name="assetOsVersion"
+                  value={formData.assetOsVersion || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset Serial No
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control
-                type="Asset Serial No"
-                placeholder="Asset Serial Number"
-                name="assetSerialNumber" onChange={handleChange}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-serial-no"
+                  name="assetSerialNumber"
+                  value={formData.assetSerialNumber || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Asset Location
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control
-                type="Asset_Location"
-                placeholder="Asset Location"
-                name="assetLocation" onChange={handleChange}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-location"
+                  name="assetLocation"
+                  value={formData.assetLocation || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               Auto Update
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control
-                type="Auto Update"
-                placeholder="Auto Update"
-                name="assetUpdate" onChange={handleChange}
-              />
-            </Col>
-          </Form.Group>
-
-          <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
-            <Form.Label column sm={2}>
-              Asset Ownership
-            </Form.Label>
-            <Col sm={5}>
-              <Form.Control
-                type="Asset Ownership"
-                placeholder="Asset Ownership"
-                name="assetOwnership" onChange={handleChange}
-              />
-            </Col>
-          </Form.Group>
-          <br />
-
-          <Form.Group as={Row} className="mb-3">
-            <Col xs={2}>
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-Update"
+                  name="assetUpdate"
+                  value={formData.assetUpdate || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
+              Auto Ownership
+              </Grid>
+              <Grid item xs={9}>
+                <TextField
+                  sx={styles('60%')}
+                  onChange={handleChange}
+                  id="asset-ownership"
+                  name="assetOwnership"
+                  value={formData.assetOwnership || ''}
+                />
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               <Button variant="contained" type="button" onClick={back}>
                 Go Back
               </Button>
-            </Col>
-            <Col xs={2}>
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
               <Button variant="contained" 
                 sx={{backgroundColor:'blue' }}
                 type="submit" disabled={!((Object.values(formData).every(Boolean)) &&  Object.values(formData).length >= 10)}>
                 Add Device
               </Button>
-            </Col>
-          </Form.Group>
+              </Grid>
+              <Grid item xs={2} sx={{alignSelf:'center'}}>
+              {msg.msg!= '' ? <div style={{color:msg.color}}>{msg.msg}</div>:''}
+              </Grid>
+          </Grid>
+          
         </Form>
       </fieldset>
     </div>

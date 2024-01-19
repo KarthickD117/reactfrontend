@@ -3,7 +3,7 @@
     overflow: auto;
     max-height: 87%;
 }
-div.formdevice > fieldset > form > div:nth-child(n) > label::after{
+div.deviceFormPage > div:nth-of-type(odd):nth-of-type(-n+20)::after{
     content: "*";
     display:inline;
     color:red;
