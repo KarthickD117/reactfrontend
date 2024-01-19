@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 import { useNavigate } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import '../css/adddevice.css';
 import * as React from "react";
 import { axiosEvent } from "../utils/axiosEvent";
@@ -14,6 +14,7 @@ import TextField from "@mui/material/TextField";
 export default function Formdata() {
   const val = useContext(devdb)
   const [formData, setFormData] = useState({});
+  const [resultArray, setResultArray] = useState([])
   const [msg, setmsg] = useState({msg:'', color:''})
   const handleChange = (event) => {
     setFormData({
@@ -21,7 +22,7 @@ export default function Formdata() {
       [event.target.name]: event.target.value,
     });
   }
-  const assetNoList = val.assetdb.map(row => row.assetNo)
+  const assetNoList = resultArray.map(row => row.assetNo)
   console.log(assetNoList.includes(Number(formData.assetNo)))
   const styles = (wid) => {
     return {
@@ -38,6 +39,7 @@ export default function Formdata() {
       await axiosEvent.post("devices/",formData)
         .then(response => {
           console.log('response is ', response)
+          val.assetdb = ''
           setmsg({msg:'Device has been saved', color:'green'})
           }
         );
@@ -49,10 +51,28 @@ export default function Formdata() {
 
   const navigate = useNavigate();
     const back = () => {
-      val.assetdb = ''
+      
       navigate("/devicemanagement");
     };
-
+    const fetchData = async () => {
+      await axiosEvent
+        .get("devices/")
+        .then((response) => {
+          setResultArray(response.data.data)
+          val.assetdb = (response.data.data);
+          val.hasPerm = response.data.perm
+        })
+        .catch((err) => console.log(err));
+    };
+    
+    useEffect(() => { 
+      if (val.assetdb===''){ 
+      fetchData();
+      }
+      else{
+        setResultArray(val.assetdb)
+      }
+    }, []);
   return (
     <div className="formdevice">
       <fieldset>
