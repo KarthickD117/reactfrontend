@@ -14,8 +14,9 @@ export default function ChatTable({array, row}){
         <div className="table-container">
                 <div className="test">
               <p>
-                With the available devices approx {re.length * 20} test cases can be
-                achieved per hour!
+                With the available devices approximately {re.length * 20} test cases shall be
+                achieved! &nbsp;
+                <i>Note: It is based on system prediction. The actual count may vary based on the network.</i>
               </p>
             </div>
             <table className="table" style={{borderCollapse: "collapse", border:'1px solid black'}}>

@@ -82,7 +82,7 @@ const Sidebar = () => {
         },
       }}
     >
-      <ProSidebar collapsed={isCollapsed} width={'20vw'}>
+      <ProSidebar collapsed={isCollapsed} width={'290px'}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
@@ -162,7 +162,7 @@ const Sidebar = () => {
               collapsed={isCollapsed}
             />
             <Item
-              title="Allocate"
+              title="Check Out"
               to="/allocate"
               icon={<ShoppingCartIcon />}
               selected={selected}
@@ -196,7 +196,7 @@ const Sidebar = () => {
               collapsed={isCollapsed}
             />
             <Item
-              title="Calendar"
+              title="Release Calendar"
               to="/calendar"
               icon={<CalendarMonthIcon />}
               selected={selected}

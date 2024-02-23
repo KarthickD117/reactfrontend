@@ -23,7 +23,7 @@ export default function StickyTable({columns, data}) {
   };
 
   return (
-    <Paper sx={{ width: '95%', overflow: 'hidden', marginLeft:'2.5%' }}>
+    <Paper sx={{ overflow: 'hidden' }}>
       <TableContainer sx={{ maxHeight: 'auto' }}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

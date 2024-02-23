@@ -27,3 +27,9 @@
     background-color: aqua;
     color: red;
 }
+.release-title {
+    text-align: center;
+}
+[class*=MuiCardActionArea-focusHighlight] {
+    background-color: white;
+}

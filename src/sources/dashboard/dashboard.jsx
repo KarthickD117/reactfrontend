@@ -62,6 +62,16 @@ function checkColor(val){
    }
 }
 
+function checkBgColor(val){
+  if(val === 100 ) {
+    return 'green';
+  } else if (val < 20) {
+    return 'red';
+  } else if (val < 100) {
+    return 'blue'; 
+   }
+}
+
 const columns = [
   { field: "project", headerName: "Project Name", width: 130, flex:1},
   { field: "lead", headerName: "Project Lead", width: 130, flex:1 },
@@ -178,7 +188,7 @@ const Dashboard = () => {
         <div className="grid-container1">
           <div className="grid-item1">
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateCalendar style={{ width: "100%" ,height:"100%"}} />
+              <DateCalendar style={{ width: "100%" ,height:"100%"}}/>
             </LocalizationProvider>
           </div>
         </div>
@@ -217,11 +227,15 @@ const Dashboard = () => {
         </button>
       </div>
         {isShown && (
-          <Chatbot
-            config={config}
-            messageParser={MessageParser}
-            actionProvider={ActionProvider}
+          <Chat
+          openBot={isShown}
+          handleChatBot={handlebot}
           />
+          // <Chatbot
+          //   config={config}
+          //   messageParser={MessageParser}
+          //   actionProvider={ActionProvider}
+          // />
         )}
     </div>
   );

@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { axiosEvent } from "../utils/axiosEvent";
 import detailsRows from "../components/rowMaping";
 import StickyTable from "../components/table";
+import '../css/checkedout.css'
+import useAxios from "../utils/hooks/useaxios";
 
 const columns = [
   { id: "assetNo", label: "Asset No", width: 150 },
@@ -17,16 +19,21 @@ const columns = [
 
 export default function CheckedOut() {
   const [resultArray, setResultArray] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      await axiosEvent.get("devicereport/view/")
-        .then((response) => setResultArray(response.data))
-        .catch((err) => console.log(err));
-    };
-    fetchData();
-  }, []);
-  const details = detailsRows(resultArray)
+  const {data, error, loading} = useAxios('devicereport/view/')
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await axiosEvent.get("devicereport/view/")
+  //       .then((response) => setResultArray(response.data))
+  //       .catch((err) => console.log(err));
+  //   };
+  //   fetchData();
+  // }, []);
+  const details = detailsRows(data)
   return (
-    <StickyTable columns={columns} data={details}/>
+    <div className="checkout-container">
+      <div className="checkedout-table-container">
+        <StickyTable columns={columns} data={details}/>
+      </div>
+    </div>
   );
 }

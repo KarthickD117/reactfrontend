@@ -105,7 +105,7 @@ export default function Tasks() {
                 </Select>
                 <Button
                     sx={{height:'100%', width:'10%', marginTop:'1%',backgroundColor:'blue',
-                        marginRight:'2.5%',
+                        marginRight:'5%',
                         '&:hover': {
                             backgroundColor: 'lightblue',
                             color: '#3c52b2',
@@ -121,66 +121,132 @@ export default function Tasks() {
             <div style={{marginLeft:"2.5%"}}>
                 <Grid container>
                     {filters.map((row, index) => (
-                        <Grid item xs={6}>
-                        <Card sx={{width:'90%', minHeight:'80%', marginBottom:'2%' }} 
-                            key={index}>
-                            <CardActionArea sx={{minHeight:'100%'}} onClick={() => handleEventOpen(index)}>
-                                <CardContent>
-                                <div>
-                                    <h4>
-                                        {row.ReleaseName}
-                                    </h4>
-                                </div>
-                                <div>
+                        // <Grid className='card-grid' item xs={8}>
+                        // <Card sx={{width:'90%', minHeight:'80%', marginBottom:'2%' }} 
+                        //     key={index}>
+                        //     <CardActionArea sx={{minHeight:'100%'}} onClick={() => handleEventOpen(index)}>
+                        //         <CardContent>
+                        //         <div>
+                        //             <h4>
+                        //                 {row.ReleaseName}
+                        //             </h4>
+                        //         </div>
+                        //         <div>
+                        //             <h6>
+                        //                 Test Rail ID: {row.TestRaidId}
+                        //             </h6>
+                        //         </div>
+                        //         <div className='detailed-report'>
+                        //             <div className='passed-row' >Passed:&nbsp;</div>
+                        //             <div className='passed-count'>
+                        //                 {row.CurrentCount.passed}
+                        //             </div>
+                        //             <div className='failed-row' >Failed:&nbsp;</div>
+                        //             <div className='failed-count'>
+                        //                 {row.CurrentCount.failed}
+                        //             </div>
+                        //         </div>
+                        //         <Grid container>
+                        //             <Grid item xs={3}>
+                        //             Latest comment:
+                        //             </Grid>
+                        //             <Grid item xs={9} sx={{backgroundColor:'aqua', color:'red'}}>
+                        //             {Object.values(row.Comment)[(Object.values(row.Comment).length)-1]}
+                        //             </Grid>
+                        //             <Grid item xs={3}>
+                        //                 POC
+                        //             </Grid>
+                        //             <Grid item xs={9}>
+                        //                 {row.Poc}
+                        //             </Grid>
+                        //             <Grid item xs={3}>
+                        //                 Status
+                        //             </Grid>
+                        //             <Grid item xs={9}>
+                        //                 {row.Status}
+                        //             </Grid>
+                        //         </Grid>
+                        //         </CardContent>
+                        //     </CardActionArea>
+                        //     {getSessionStorage('isAdmin') === 'true' ?<CardActions>
+                        //         <Button size="small" variant='contained' 
+                        //         sx={{backgroundColor:'blue',
+                        //         '&:hover': {
+                        //             backgroundColor: 'lightblue',
+                        //             color: '#3c52b2',
+                        //         },}} 
+                        //         onClick={() => handleOpen(index)}>
+                        //             EDIT / MODIFY
+                        //         </Button>
+                        //     </CardActions>:''}
+                        // </Card>
+                        // </Grid>
+                        <Card sx={{display:'flex', width:'95%', marginBottom:'1%'}}>
+                            <Box sx={{display:'flex', flexDirection:'column',alignSelf:'center'}}>
+                            <CardContent sx={{flex: '1 0 auto', width:'20vw'}}>
+                                <h5 className='release-title'>
+                                    {row.ReleaseName}
+                                </h5>
+                            </CardContent>
+                            </Box>
+                            <CardContent sx={{width:'80%'}}>
+                            <CardActionArea className='card-action-area' sx={{minHeight:'100%'}} onClick={() => handleEventOpen(index)}>
+                            <div>
+                                <Grid container>
+                                    <Grid item xs={10}>
                                     <h6>
                                         Test Rail ID: {row.TestRaidId}
                                     </h6>
-                                </div>
-                                <div className='detailed-report'>
-                                    <div className='passed-row' >Passed:&nbsp;</div>
-                                    <div className='passed-count'>
-                                        {row.CurrentCount.passed}
-                                    </div>
-                                    <div className='failed-row' >Failed:&nbsp;</div>
-                                    <div className='failed-count'>
-                                        {row.CurrentCount.failed}
-                                    </div>
-                                </div>
-                                <Grid container>
-                                    <Grid item xs={3}>
-                                    Latest comment:
                                     </Grid>
-                                    <Grid item xs={9} sx={{backgroundColor:'aqua', color:'red'}}>
-                                    {Object.values(row.Comment)[(Object.values(row.Comment).length)-1]}
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        POC
-                                    </Grid>
-                                    <Grid item xs={9}>
-                                        {row.Poc}
-                                    </Grid>
-                                    <Grid item xs={3}>
-                                        Status
-                                    </Grid>
-                                    <Grid item xs={9}>
-                                        {row.Status}
+                                    <Grid item xs={2}>
+                                {getSessionStorage('isAdmin') === 'true' ?
+                                <CardActions>
+                                    <Button size="small" variant='contained' 
+                                    sx={{backgroundColor:'blue',
+                                    '&:hover': {
+                                        backgroundColor: 'lightblue',
+                                        color: '#3c52b2',
+                                    },}} 
+                                    onClick={() => handleOpen(index)}>
+                                        EDIT / MODIFY
+                                    </Button>
+                                </CardActions>:''}
                                     </Grid>
                                 </Grid>
-                                </CardContent>
-                            </CardActionArea>
-                            {getSessionStorage('isAdmin') === 'true' ?<CardActions>
-                                <Button size="small" variant='contained' 
-                                sx={{backgroundColor:'blue',
-                                '&:hover': {
-                                    backgroundColor: 'lightblue',
-                                    color: '#3c52b2',
-                                },}} 
-                                onClick={() => handleOpen(index)}>
-                                    EDIT / MODIFY
-                                </Button>
-                            </CardActions>:''}
+                             </div>
+                             <div className='detailed-report'>
+                                 <div className='passed-row' >Passed:&nbsp;</div>
+                                 <div className='passed-count'>
+                                     {row.CurrentCount.passed}
+                                    </div>
+                                 <div className='failed-row' >Failed:&nbsp;</div>
+                                 <div className='failed-count'>
+                                     {row.CurrentCount.failed}
+                                 </div>
+                             </div>
+                             <Grid container sx={{width:'100%'}}>
+                                 <Grid item xs={3}>
+                                 Latest comment:
+                                 </Grid>
+                                 <Grid item xs={9} sx={{color:'red'}}>
+                                 {Object.values(row.Comment)[(Object.values(row.Comment).length)-1]}
+                                 </Grid>
+                                 <Grid item xs={3}>
+                                     POC
+                                 </Grid>
+                                 <Grid item xs={9}>
+                                     {row.Poc}
+                                 </Grid>
+                                 <Grid item xs={3}>
+                                     Status
+                                 </Grid>
+                                 <Grid item xs={9}>
+                                        {row.Status}
+                                 </Grid>
+                             </Grid>
+                             </CardActionArea>
+                            </CardContent>
                         </Card>
-                        </Grid>
                     ))
                 }
                 </Grid>

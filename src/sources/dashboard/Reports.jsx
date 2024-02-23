@@ -12,6 +12,7 @@ import { useTheme } from "@mui/material";
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { tokens } from "../../theme";
+import '../css/reports.css'
 const columns = [
   { id: "assetNo", label: "Asset No", width: 85 },
   { id: "assetType", label: "Asset Type", width: 85 },
@@ -20,7 +21,7 @@ const columns = [
   { id: "Firstname", label: "Borrower Name", width: 85 },
   { id: "dateBorrowed", label: "Date Borrowed", width: 100 },
   { id: "dateReturned", label: "Return Date", width: 100 },
-  { id: "duration", label: "Duration", width: 85 },
+  { id: "duration", label: "Duration (hr)", width: 85 },
 ];
 
 export default function Report() {
@@ -52,7 +53,7 @@ export default function Report() {
       fetchData(val)
     }
   }
-  
+  console.log(typeof details[0].dateBorrowed)
   useEffect(() =>{
     const d = new Date()
     const currentMonth = d.getFullYear()+'-'+ ((d.getMonth() < 9) ? ('0'+(d.getMonth()+1)) : (d.getMonth()+1))
@@ -106,7 +107,9 @@ export default function Report() {
             }
       </div>
     </div>
-    <StickyTable columns={columns} data={details} />
+    <div className="report-table-container">
+      <StickyTable columns={columns} data={details} />
+    </div>
     </div>
   );
 }

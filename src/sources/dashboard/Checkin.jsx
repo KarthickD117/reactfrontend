@@ -6,6 +6,9 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Grid from '@mui/material/Grid'
+import { useTheme } from "@mui/material/styles";
+import { tokens } from "../../theme";
 import Paper from "@mui/material/Paper";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -75,13 +78,9 @@ const handleSubmit = async (event) => {
     handleEvent()
   };
   return (
-      <div className="main">
-          <div className="alert">
-              <h6>{ resultArray.length === 0 ? 'No Device Allocated': 'Allocated Devices'}</h6>
-          </div>
-      <TableContainer component={Paper}>
+      <div className="mainn" style={{ backgroundColor:'#e0e0e0', overflowY:"auto", width:'96%'}}>
+     <TableContainer component={Paper} sx={{width:'97%',marginLeft:'1.5%',marginTop:'1.5%'}}>
         <Table
-          sx={{ minWidth: 650 }}
           aria-label="simple table"
           style={{ backgroundColor: "white"}}
         >
@@ -114,12 +113,17 @@ const handleSubmit = async (event) => {
                 <TableCell><Button style={{backgroundColor: "Orange"}} variant='contained' startIcon={<CloseOutlinedIcon />}
                   onClick={() => handleOpen(row.ps_no.ps_no,row.assetNo.assetNo, row.assetNo.assetModel)}>RETURN</Button>
                   </TableCell>
-               
+
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
+        <div className="text-center m-4">
+          <p>{ resultArray.length === 0 ?
+             'No Device Allocated'
+              : <div></div>}</p>
+        </div>
       <Dialog
         open={open}
         onClose={handleClose}

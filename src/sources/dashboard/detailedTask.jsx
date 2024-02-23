@@ -363,7 +363,7 @@ export default function TaskView(){
                 </Button>
                 
                 </Grid>
-                {msg.msg != '' && <Grid item xs={4}><div style={{marginTop:'5%', color:msg.color}}>{msg.msg}</div></Grid>}
+                {msg.msg != '' ? <Grid item xs={4}><div style={{marginTop:'5%', color:msg.color}}>{msg.msg}</div></Grid>:''}
             </Grid>
         </div>
     )

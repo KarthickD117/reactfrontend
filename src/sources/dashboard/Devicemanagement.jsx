@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { devdb } from '../../context';
 import { useSearchCtx } from '../utils/customcontext';
 import { Grid } from '@mui/material';
+import '../css/devicemanagement.css'
 const columns = [
   { id: 'assetNo', label: "Device ID", minWidth: 50 },
   { id: 'assetType', label: "Device Type", minWidth: 50 },
@@ -22,6 +23,10 @@ const columns = [
 
 export default function DataTable() {
   const val = useContext(devdb)
+  const [category, setCategory] = useState()
+  const [totalDevice, setTotalDevice] = useState()
+  const [deviceInUse, setDeviceInUse] = useState()
+  const [available, setAvailableDevice] = useState()
   const [resultArray, setResultArray] = useState([]);
   const [selectedDeviceType, setSelectedDeviceType] = useState('');
   const [selectedDeviceBrand, setSelectedDeviceBrand] = useState('');
@@ -70,6 +75,13 @@ export default function DataTable() {
     }
   }, []);
 
+  useEffect(() =>{
+    let Availability = resultArray.filter(row => row.assetAvailability === 'Available').length
+    setTotalDevice(resultArray.length)
+    setCategory(Array.from(new Set(resultArray.map((data) => data.assetType))).length)
+    setAvailableDevice(Availability)
+  },[resultArray])
+
   function firstfilter(){
     if (selectedDeviceType === ''){
       return resultArray;
@@ -110,23 +122,42 @@ export default function DataTable() {
       return fd
     }
   }
-  console.log(filters())
+
   return (
-    <div className='devicetable'  style={{height: '87%', overflow:"auto"}}>
-    <div className="button" style={{ paddingLeft: '2.5%' }}>
-        {perm && <Button variant="contained" sx={{backgroundColor:'blue', '&:hover':{backgroundColor:'#005580'}}} onClick={navigatee} disabled={!perm}>
-          Add Device
-        </Button>}
-      </div>
-      <Grid container sx={{paddingLeft:'2.5%', paddingTop:'2%'}} columnGap={2}>
+    <>
+    <div className='devicetable'  style={{height: '87%', overflow:"auto", backgroundColor:'#f5f5f5'}}>
+    <div className='overall-container'>
+      <h5 className='container-header'>
+        Overall Devices
+      </h5>
+      <Grid container className='count-container'>
+        <Grid item xs={3} className='category'>
+          <h6 style={{color:"red"}}>Categories</h6>
+          <div>{category}</div>
+        </Grid>
+        <Grid item xs={3}>
+          <h6 style={{color:'orange'}}>Total Devices</h6>
+          <div>{resultArray.length}</div>
+        </Grid>
+        <Grid item xs={3}>
+          <h6 style={{color:'purple'}}>Device In Use</h6>
+          <div>{totalDevice - available}</div>
+        </Grid>
+        <Grid item xs={3}> 
+          <h6 style={{color:'red'}}>Available Devices</h6>
+          <div>{available}</div>
+        </Grid>
+      </Grid>
+    </div>
+    <div className='total-table'>
+      <Grid container className='filter-container' >
         <Grid item xs={2}>
         <Form.Select size="sm" onChange={handleChange}>
               <option value=''>Device Type</option>
-              
               {setOfDeviceType.map((deviceType, index) => <option key={index} value={deviceType}> {deviceType} </option>)}
             </Form.Select>
         </Grid>
-        <Grid item xs={2}>
+        <Grid item xs={2} style={{paddingLeft:'1%'}}>
         <Form.Select key={selectedDeviceType} size="sm" onChange={handleBrandChange} >
             <option value=''>Device Brand</option>
               
@@ -135,10 +166,21 @@ export default function DataTable() {
               }
             </Form.Select>
         </Grid>
+        <Grid item xs={6}></Grid>
+        <Grid item xs={2}>
+       <div style={{textAlign:'end'}}>
+        {perm && <Button variant="contained" sx={{backgroundColor:'blue', '&:hover':{backgroundColor:'#005580'}}} onClick={navigatee} disabled={!perm}>
+          Add Device
+        </Button>}
+        </div>
+
+        </Grid>
       </Grid>
-      <div className="table" style={{paddingTop:'2%'}}>
+      <div className="device-table">
     <StickyTable columns={columns} data={filters()}/>
     </div>
     </div>
+    </div>
+    </>
   );
 }
