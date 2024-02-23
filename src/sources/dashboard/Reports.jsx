@@ -53,7 +53,7 @@ export default function Report() {
       fetchData(val)
     }
   }
-  console.log(typeof details[0].dateBorrowed)
+  
   useEffect(() =>{
     const d = new Date()
     const currentMonth = d.getFullYear()+'-'+ ((d.getMonth() < 9) ? ('0'+(d.getMonth()+1)) : (d.getMonth()+1))
